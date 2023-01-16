@@ -5,6 +5,18 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare", "StudentHelpCare\StudentHelpCare.csproj", "{7B533BAF-1A94-4480-B34D-ADC070E62167}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.Data", "StudentHelpCare.Data\StudentHelpCare.Data.csproj", "{B2CDE6CD-50FD-4E94-AF74-9523AACD137A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.Repository", "StudentHelpCare.Repository\StudentHelpCare.Repository.csproj", "{270AD2B6-C704-4B50-B783-57C517DEBD39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.Services", "StudentHelpCare.Services\StudentHelpCare.Services.csproj", "{42251638-9C98-47EC-BDFA-70483A9D835C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.ViewModel", "StudentHelpCare.ViewModel\StudentHelpCare.ViewModel.csproj", "{951777AD-6274-44CE-A9D3-67D089ECBB24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.Library", "StudentHelpCare.Library\StudentHelpCare.Library.csproj", "{77E27AEC-3BA1-4650-83E3-02C090327495}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.UnitTesting", "StudentHelpCare.UnitTesting\StudentHelpCare.UnitTesting.csproj", "{9C8014C3-34C8-42B7-8E4D-413038991D34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +27,30 @@ Global
 		{7B533BAF-1A94-4480-B34D-ADC070E62167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B533BAF-1A94-4480-B34D-ADC070E62167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B533BAF-1A94-4480-B34D-ADC070E62167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2CDE6CD-50FD-4E94-AF74-9523AACD137A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2CDE6CD-50FD-4E94-AF74-9523AACD137A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2CDE6CD-50FD-4E94-AF74-9523AACD137A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2CDE6CD-50FD-4E94-AF74-9523AACD137A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{270AD2B6-C704-4B50-B783-57C517DEBD39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{270AD2B6-C704-4B50-B783-57C517DEBD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{270AD2B6-C704-4B50-B783-57C517DEBD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{270AD2B6-C704-4B50-B783-57C517DEBD39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42251638-9C98-47EC-BDFA-70483A9D835C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42251638-9C98-47EC-BDFA-70483A9D835C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42251638-9C98-47EC-BDFA-70483A9D835C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42251638-9C98-47EC-BDFA-70483A9D835C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{951777AD-6274-44CE-A9D3-67D089ECBB24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{951777AD-6274-44CE-A9D3-67D089ECBB24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{951777AD-6274-44CE-A9D3-67D089ECBB24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{951777AD-6274-44CE-A9D3-67D089ECBB24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77E27AEC-3BA1-4650-83E3-02C090327495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77E27AEC-3BA1-4650-83E3-02C090327495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77E27AEC-3BA1-4650-83E3-02C090327495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77E27AEC-3BA1-4650-83E3-02C090327495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C8014C3-34C8-42B7-8E4D-413038991D34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C8014C3-34C8-42B7-8E4D-413038991D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C8014C3-34C8-42B7-8E4D-413038991D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C8014C3-34C8-42B7-8E4D-413038991D34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
