@@ -1,6 +1,12 @@
+using StudentHelpCare.AppSetting;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//dependency injection
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+//register maps
+app.RegisterMap();
 
 app.Run();
