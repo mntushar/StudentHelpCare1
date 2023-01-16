@@ -1,21 +1,26 @@
-﻿namespace StudentHelpCare.Maps
+﻿using StudentHelpCare.Services.IServices;
+using StudentHelpCare.ViewModel.Student;
+
+namespace StudentHelpCare.Maps
 {
     public class StudentMap
     {
-        public StudentMap()
-        {
-        }
-
         public WebApplication InitialiseStudentMap(WebApplication app)
         {
-            app.MapGet("/", GetAll);
+            app.MapGet("/student", (IStudentServices studentService) => GetStudent(studentService));
+            app.MapPost("/student/create", (IStudentServices studentServices, StudentViewModal student) => Create(studentServices, student));
 
             return app;
         }
 
-        protected async Task<IResult> GetAll()
+        protected async Task<IResult> GetStudent(IStudentServices studentServices)
         {
-            return TypedResults.Ok(await Task.Run(() => "Hello Student!"));
+            return TypedResults.Ok(await studentServices.GetItemListAsync());
+        }
+
+        protected async Task<IResult> Create(IStudentServices studentServices, StudentViewModal student)
+        {
+            return TypedResults.Ok(await studentServices.InsertItemAsync(student));
         }
     }
 }
