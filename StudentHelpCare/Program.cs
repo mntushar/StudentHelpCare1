@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using StudentHelpCare.AppSetting;
 using StudentHelpCare.Repository;
 

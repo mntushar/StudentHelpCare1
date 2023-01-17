@@ -7,16 +7,13 @@ namespace StudentHelpCare.AppSetting
         public static WebApplication RegisterMap(this WebApplication app)
         {
             //initialise index map
-            IndexMap indexMap = new IndexMap();
-            indexMap.InitialiseIndexMap(app);
+            IndexMap.InitialiseIndexMap(app);
 
             //initialise student map
-            StudentMap studentMap = new StudentMap();
-            studentMap.InitialiseStudentMap(app);
+            StudentMap.InitialiseStudentMap(app);
 
             //initialise teacher map
-            TeacherMap teacherMap = new TeacherMap();
-            teacherMap.InitialiseTeacherMap(app);
+            TeacherMap.InitialiseTeacherMap(app);
 
             return app;
         }

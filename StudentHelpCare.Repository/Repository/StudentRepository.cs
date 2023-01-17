@@ -15,7 +15,7 @@ namespace StudentHelpCare.Repository.Repository
 
         public virtual async Task<bool> InsertItemAsync(StudentEntity entity)
         {
-            _appDbContext.Student.Add(entity);
+            await _appDbContext.Student.AddAsync(entity);
             return await _appDbContext.SaveChangesAsync() > 0 ? true : false;
         }
 

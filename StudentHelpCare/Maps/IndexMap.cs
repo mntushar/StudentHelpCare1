@@ -1,15 +1,15 @@
 ﻿namespace StudentHelpCare.Maps
 {
-    public class IndexMap
+    public static class IndexMap
     {
-        public WebApplication InitialiseIndexMap(WebApplication app)
+        public static WebApplication InitialiseIndexMap(WebApplication app)
         {
             app.MapGet("/", () => Get());
 
             return app;
         }
 
-        protected async Task<IResult> Get()
+        private static async Task<IResult> Get()
         {
             return TypedResults.Ok(await Task.Run(() => "Hello World!"));
         }
