@@ -7,6 +7,7 @@ namespace StudentHelpCare.Repository
 {
     public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
+        public DbSet<UserEntity> User { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<StudentEntity> Student { get; set; }
 

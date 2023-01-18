@@ -9,6 +9,12 @@ namespace StudentHelpCare.AppSetting
             //initialise index map
             IndexMap.InitialiseIndexMap(app);
 
+            //user registration
+            UserRegistrationMap.InitialiseUserRegistrationMap(app);
+
+            //user registration
+            //UserLoginMap.InitialiseUserLoginMap(app);
+
             //initialise student map
             StudentMap.InitialiseStudentMap(app);
 
