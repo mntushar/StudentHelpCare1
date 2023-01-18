@@ -9,6 +9,7 @@ namespace StudentHelpCare.AppSetting
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IStudentServices, StudentServices>();
+            services.AddTransient<IUserRegistrationServices, UserRegistrationServices>();
 
             return services;
         }

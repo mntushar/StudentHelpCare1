@@ -14,13 +14,9 @@ namespace StudentHelpCare.Maps
             return app;
         }
 
-        private static async Task<IResult> UserRegristration(UserViewModel user)
+        private static async Task<IResult> UserRegristration(IUserRegistrationServices userRegistrationServices, UserViewModel user)
         {
-            if(user.Password == user.RepeatPassword)
-            {
-
-            }
-            return TypedResults.Ok(await Task.Run(() => "test"));
+            return TypedResults.Ok(await userRegistrationServices.CreateUser(user));
         }
     }
 }
