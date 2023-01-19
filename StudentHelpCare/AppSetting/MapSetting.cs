@@ -12,8 +12,8 @@ namespace StudentHelpCare.AppSetting
             //user registration
             UserRegistrationMap.InitialiseUserRegistrationMap(app);
 
-            //user registration
-            //UserLoginMap.InitialiseUserLoginMap(app);
+            //user login
+            UserLoginMap.InitialiseUserLoginMap(app);
 
             //initialise student map
             StudentMap.InitialiseStudentMap(app);

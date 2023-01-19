@@ -249,7 +249,7 @@ namespace StudentHelpCare.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student");
+                    b.ToTable("Student", (string)null);
                 });
 
             modelBuilder.Entity("StudentHelpCare.Data.Entity.Role", b =>

@@ -22,9 +22,9 @@
             return new UserViewModel()
             {
                 Id = dataEntity.Id,
-                UserName = dataEntity.UserName,
-                Email = dataEntity.Email,
-                PhoneNumber = dataEntity.PhoneNumber,
+                UserName = dataEntity.UserName!,
+                Email = dataEntity.Email!,
+                PhoneNumber = dataEntity.PhoneNumber!,
             };
         }
 

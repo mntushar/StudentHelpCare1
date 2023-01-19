@@ -1,6 +1,5 @@
 ﻿using StudentHelpCare.Services.IServices;
 using StudentHelpCare.Services.Services;
-using System.Runtime.CompilerServices;
 
 namespace StudentHelpCare.AppSetting
 {
@@ -8,8 +7,11 @@ namespace StudentHelpCare.AppSetting
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddTransient<IStudentServices, StudentServices>();
+            services.AddTransient<ITokenServices, TokenServices>();
+            services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IUserRegistrationServices, UserRegistrationServices>();
+            services.AddTransient<IUserAuthenticationServices, UserAuthenticationServices>();
+            services.AddTransient<IStudentServices, StudentServices>();
 
             return services;
         }

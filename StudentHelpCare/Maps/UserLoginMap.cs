@@ -1,4 +1,5 @@
-﻿using StudentHelpCare.ViewModel.User;
+﻿using StudentHelpCare.Data.Model;
+using StudentHelpCare.Services.IServices;
 
 namespace StudentHelpCare.Maps
 {
@@ -8,14 +9,14 @@ namespace StudentHelpCare.Maps
         {
             var loginMap = app.MapGroup("/login");
 
-            loginMap.MapPost("", UserLogin);
+            loginMap.MapPost("/", UserLogin);
 
             return app;
         }
 
-        private static async Task<IResult> UserLogin()
+        private static async Task<IResult> UserLogin(IUserAuthenticationServices authenticationServices, UserLoginModel userLogin)
         {
-            return TypedResults.Ok(await Task.Run(() => "Login"));
+            return TypedResults.Ok(await authenticationServices.UserLogin(userLogin));
         }
     }
 }

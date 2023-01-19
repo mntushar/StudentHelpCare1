@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.25.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudentHelpCare.Library\StudentHelpCare.Library.csproj" />
     <ProjectReference Include="..\StudentHelpCare.Repository\StudentHelpCare.Repository.csproj" />
     <ProjectReference Include="..\StudentHelpCare.ViewModel\StudentHelpCare.ViewModel.csproj" />
   </ItemGroup>
