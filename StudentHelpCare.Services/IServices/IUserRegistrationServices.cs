@@ -4,6 +4,6 @@ namespace StudentHelpCare.Services.IServices
 {
     public interface IUserRegistrationServices
     {
-        Task<bool> CreateUser(UserViewModel user);
+        Task<string> CreateUser(UserViewModel user);
     }
 }

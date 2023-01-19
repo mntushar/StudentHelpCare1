@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using StudentHelpCare.Services.IServices;
 using StudentHelpCare.ViewModel.User;
 
@@ -17,9 +16,9 @@ namespace StudentHelpCare.Services.Services
             _logger = logger;
         }
 
-        public async Task<bool> CreateUser(UserViewModel user)
+        public async Task<string> CreateUser(UserViewModel user)
         {
-            bool isSuccess = false;
+            string isSuccess = "false";
 
             try
             {
@@ -38,7 +37,14 @@ namespace StudentHelpCare.Services.Services
 
                 if (result.Succeeded)
                 {
-                    isSuccess = true;
+                    isSuccess = "true";
+                }
+                else
+                {
+                    if(result.Errors.Any())
+                    {
+                        isSuccess = string.Join("", result.Errors.Select(x => x.Description));
+                    }
                 }
             }
             catch (Exception ex)
