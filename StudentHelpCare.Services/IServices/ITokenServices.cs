@@ -1,9 +1,10 @@
-﻿using StudentHelpCare.Data.Entity;
+﻿using Microsoft.AspNetCore.Identity;
+using StudentHelpCare.Data.Entity;
 
 namespace StudentHelpCare.Services.IServices
 {
     public interface ITokenServices
     {
-        Task<string> GenerateTocken(UserEntity user);
+        Task<string> GenerateTocken(IdentityUser user);
     }
 }

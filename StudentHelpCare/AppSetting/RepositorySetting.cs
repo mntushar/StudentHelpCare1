@@ -8,7 +8,6 @@ namespace StudentHelpCare.AppSetting
     {
         public static IServiceCollection RegisterRepository(this IServiceCollection services)
         {
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IStudentRepository, StudentRepository>();
 
             return services;
