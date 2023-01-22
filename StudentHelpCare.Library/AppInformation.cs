@@ -2,17 +2,11 @@
 {
     public static class AppInformation
     {
-        private static readonly string appUrl = "";
-        private static readonly string appSecretKey = "";
+        private static readonly string appUrl = "https://localhost:7110/";
 
         public static string GetAppUrl()
         {
             return appUrl;
-        }
-
-        public static string GetAppSecretKey()
-        {
-            return appSecretKey;
         }
     }
 }
