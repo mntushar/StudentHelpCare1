@@ -14,9 +14,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\StudentHelpCare.Repository\StudentHelpCare.Repository.csproj" />
-    <ProjectReference Include="..\StudentHelpCare.Services\StudentHelpCare.Services.csproj" />
-  </ItemGroup>
-
 </Project>
