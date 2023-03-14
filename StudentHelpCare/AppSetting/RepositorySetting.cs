@@ -1,8 +1,7 @@
-﻿using StudentHelpCare.Repository;
-using StudentHelpCare.Repository.IRepository;
-using StudentHelpCare.Repository.Repository;
+﻿using StudentHelpCare.StudentHelpCare.Repository.IRepository;
+using StudentHelpCare.StudentHelpCare.Repository.Repository;
 
-namespace StudentHelpCare.AppSetting
+namespace StudentHelpCare.StudentHelpCare.AppSetting
 {
     public static class RepositorySetting
     {

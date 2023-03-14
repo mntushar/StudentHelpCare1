@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using StudentHelpCare.Data.Model;
-using StudentHelpCare.Services.IServices;
-using StudentHelpCare.ViewModel.User;
+using StudentHelpCare.StudentHelpCare.Data.Model;
+using StudentHelpCare.StudentHelpCare.Services.IServices;
+using StudentHelpCare.StudentHelpCare.ViewModel.User;
 
-namespace StudentHelpCare.Services.Services
+namespace StudentHelpCare.StudentHelpCare.Services.Services
 {
     public class UserAccountServices : IUserAccountServices
     {

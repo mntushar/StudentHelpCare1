@@ -1,6 +1,6 @@
-﻿using StudentHelpCare.Data.Entity;
+﻿using StudentHelpCare.StudentHelpCare.Data.Entity;
 
-namespace StudentHelpCare.Repository.IRepository
+namespace StudentHelpCare.StudentHelpCare.Repository.IRepository
 {
     public interface IStudentRepository
     {

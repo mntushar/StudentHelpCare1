@@ -1,6 +1,6 @@
-﻿using StudentHelpCare.Maps;
+﻿using StudentHelpCare.StudentHelpCare.Maps;
 
-namespace StudentHelpCare.AppSetting
+namespace StudentHelpCare.StudentHelpCare.AppSetting
 {
     public static class MapSetting
     {

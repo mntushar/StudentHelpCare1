@@ -1,7 +1,7 @@
-﻿using StudentHelpCare.Services.IServices;
-using StudentHelpCare.Services.Services;
+﻿using StudentHelpCare.StudentHelpCare.Services.IServices;
+using StudentHelpCare.StudentHelpCare.Services.Services;
 
-namespace StudentHelpCare.AppSetting
+namespace StudentHelpCare.StudentHelpCare.AppSetting
 {
     public static class ServicesSetting
     {

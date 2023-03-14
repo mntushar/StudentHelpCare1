@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace StudentHelpCare.Data.Entity
+namespace StudentHelpCare.StudentHelpCare.Data.Entity
 {
     public class Role : IdentityRole
     {

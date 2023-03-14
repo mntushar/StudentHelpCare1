@@ -1,4 +1,4 @@
-﻿namespace StudentHelpCare.Library
+﻿namespace StudentHelpCare.StudentHelpCare.Library
 {
     public static class AppInformation
     {

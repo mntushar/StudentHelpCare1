@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using StudentHelpCare.Library;
-using StudentHelpCare.Services.IServices;
+using StudentHelpCare.StudentHelpCare.Library;
+using StudentHelpCare.StudentHelpCare.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace StudentHelpCare.Services.Services
+namespace StudentHelpCare.StudentHelpCare.Services.Services
 {
     public class TokenServices : ITokenServices
     {

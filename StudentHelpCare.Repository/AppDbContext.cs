@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using StudentHelpCare.Data.Entity;
+using StudentHelpCare.StudentHelpCare.Data.Entity;
 
-namespace StudentHelpCare.Repository
+namespace StudentHelpCare.StudentHelpCare.Repository
 {
     public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {

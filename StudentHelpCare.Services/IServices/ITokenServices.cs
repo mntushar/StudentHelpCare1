@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using StudentHelpCare.Data.Entity;
 
-namespace StudentHelpCare.Services.IServices
+namespace StudentHelpCare.StudentHelpCare.Services.IServices
 {
     public interface ITokenServices
     {

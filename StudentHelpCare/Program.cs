@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using StudentHelpCare.AppSetting;
-using StudentHelpCare.Repository;
+using StudentHelpCare.StudentHelpCare.AppSetting;
+using StudentHelpCare.StudentHelpCare.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,6 @@
-﻿using StudentHelpCare.ViewModel.Student;
+﻿using StudentHelpCare.StudentHelpCare.ViewModel.Student;
 
-namespace StudentHelpCare.Services.IServices
+namespace StudentHelpCare.StudentHelpCare.Services.IServices
 {
     public interface IStudentServices
     {

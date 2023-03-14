@@ -1,8 +1,8 @@
-﻿using StudentHelpCare.Repository.IRepository;
-using StudentHelpCare.Services.IServices;
-using StudentHelpCare.ViewModel.Student;
+﻿using StudentHelpCare.StudentHelpCare.Repository.IRepository;
+using StudentHelpCare.StudentHelpCare.Services.IServices;
+using StudentHelpCare.StudentHelpCare.ViewModel.Student;
 
-namespace StudentHelpCare.Services.Services
+namespace StudentHelpCare.StudentHelpCare.Services.Services
 {
     public class StudentServices : IStudentServices
     {

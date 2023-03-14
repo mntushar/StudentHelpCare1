@@ -1,4 +1,4 @@
-﻿namespace StudentHelpCare.ViewModel.User
+﻿namespace StudentHelpCare.StudentHelpCare.ViewModel.User
 {
     public class UserDto
     {

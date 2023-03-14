@@ -1,7 +1,7 @@
-﻿using StudentHelpCare.Data.Model;
-using StudentHelpCare.ViewModel.User;
+﻿using StudentHelpCare.StudentHelpCare.Data.Model;
+using StudentHelpCare.StudentHelpCare.ViewModel.User;
 
-namespace StudentHelpCare.Services.IServices
+namespace StudentHelpCare.StudentHelpCare.Services.IServices
 {
     public interface IUserAccountServices
     {

@@ -1,4 +1,4 @@
-﻿namespace StudentHelpCare.Maps
+﻿namespace StudentHelpCare.StudentHelpCare.Maps
 {
     public static class IndexMap
     {

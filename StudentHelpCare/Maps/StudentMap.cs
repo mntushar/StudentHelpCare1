@@ -1,7 +1,7 @@
-﻿using StudentHelpCare.Services.IServices;
-using StudentHelpCare.ViewModel.Student;
+﻿using StudentHelpCare.StudentHelpCare.Services.IServices;
+using StudentHelpCare.StudentHelpCare.ViewModel.Student;
 
-namespace StudentHelpCare.Maps
+namespace StudentHelpCare.StudentHelpCare.Maps
 {
     public static class StudentMap
     {

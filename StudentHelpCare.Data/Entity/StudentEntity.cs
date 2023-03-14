@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudentHelpCare.Data.Entity
+namespace StudentHelpCare.StudentHelpCare.Data.Entity
 {
     public class StudentEntity
     {

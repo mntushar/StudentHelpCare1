@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudentHelpCare.Data.Entity;
-using StudentHelpCare.Repository.IRepository;
+using StudentHelpCare.StudentHelpCare.Data.Entity;
+using StudentHelpCare.StudentHelpCare.Repository.IRepository;
 
-namespace StudentHelpCare.Repository.Repository
+namespace StudentHelpCare.StudentHelpCare.Repository.Repository
 {
     public class StudentRepository : IStudentRepository
     {

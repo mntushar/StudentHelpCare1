@@ -1,8 +1,8 @@
-﻿using StudentHelpCare.Data.Model;
-using StudentHelpCare.Services.IServices;
-using StudentHelpCare.ViewModel.User;
+﻿using StudentHelpCare.StudentHelpCare.Data.Model;
+using StudentHelpCare.StudentHelpCare.Services.IServices;
+using StudentHelpCare.StudentHelpCare.ViewModel.User;
 
-namespace StudentHelpCare.Maps
+namespace StudentHelpCare.StudentHelpCare.Maps
 {
     public static class UserAccountMap
     {

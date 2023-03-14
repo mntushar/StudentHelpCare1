@@ -1,4 +1,4 @@
-﻿namespace StudentHelpCare.ViewModel.Student
+﻿namespace StudentHelpCare.StudentHelpCare.ViewModel.Student
 {
     public class StudentViewModal
     {

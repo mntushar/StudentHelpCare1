@@ -1,4 +1,4 @@
-﻿namespace StudentHelpCare.Data.Model
+﻿namespace StudentHelpCare.StudentHelpCare.Data.Model
 {
     public class UserLoginModel
     {
