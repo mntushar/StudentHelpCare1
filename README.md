@@ -19,4 +19,5 @@
 
 ■ Using helper tools:<br />
 - Ef core
+- Identity
 - Identity Server
