@@ -14,7 +14,7 @@
 
 ■ Design principle:<br />
 - SOLID
-- Micro Services
+- Microservices
 - Clean Architecture
 
 ■ Using helper tools:<br />
