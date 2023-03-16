@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentHelpCare.Identity.Data\StudentHelpCare.Identity.Data.csproj" />
+    <ProjectReference Include="..\StudentHelpCare.Identity.Data\StudentHelpCareIdentity.Data.csproj" />
   </ItemGroup>
 
 </Project>
