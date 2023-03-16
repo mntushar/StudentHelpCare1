@@ -6,9 +6,9 @@ namespace StudentHelpCare.StudentHelpCare.Repository.Repository
 {
     public class StudentRepository : IStudentRepository
     {
-        private AppDbContext _appDbContext;
+        private StudentHelpCareDbContext _appDbContext;
 
-        public StudentRepository(AppDbContext appDbContext)
+        public StudentRepository(StudentHelpCareDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

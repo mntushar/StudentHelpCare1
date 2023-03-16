@@ -5,7 +5,7 @@ using StudentHelpCare.StudentHelpCare.Repository;
 var builder = WebApplication.CreateBuilder(args);
 
 //configer dbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<StudentHelpCareDbContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.

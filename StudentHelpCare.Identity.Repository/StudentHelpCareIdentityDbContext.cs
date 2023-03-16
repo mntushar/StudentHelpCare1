@@ -5,12 +5,12 @@ using StudentHelpCare.Identity.Data.Entity;
 
 namespace StudentHelpCare.Identity.Repository
 {
-    public class AppDbContext : IdentityDbContext<UserEntity, Role, string>
+    public class StudentHelpCareIdentityDbContext : IdentityDbContext<UserEntity, Role, string>
     {
         public DbSet<UserEntity> User { get; set; }
         public DbSet<Role> Role { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        public StudentHelpCareIdentityDbContext(DbContextOptions<StudentHelpCareIdentityDbContext> options)
         : base(options)
         {
         }

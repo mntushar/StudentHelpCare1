@@ -6,7 +6,7 @@ using StudentHelpCare.StudentHelpCareIdentityServer.AppSetting;
 var builder = WebApplication.CreateBuilder(args);
 
 //configer dbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<StudentHelpCareIdentityDbContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
