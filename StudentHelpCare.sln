@@ -21,17 +21,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCare.ViewModel",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StudentHelpCareIdentityServer", "StudentHelpCareIdentityServer", "{205702FC-A94C-4B86-A3D0-CCFA9D9A073E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCare.Identity", "StudentHelpCare.Identity\StudentHelpCare.Identity.csproj", "{C0401085-85C3-4111-981D-D3DD52638E31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCareIdentity", "StudentHelpCare.Identity\StudentHelpCareIdentity.csproj", "{C0401085-85C3-4111-981D-D3DD52638E31}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCareIdentity.Data", "StudentHelpCare.Identity.Data\StudentHelpCareIdentity.Data.csproj", "{9C9543D4-07D7-4471-97C8-729560487489}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCare.Identity.Repository", "StudentHelpCare.Identity.Repository\StudentHelpCare.Identity.Repository.csproj", "{3486C5D4-7CE2-4979-B427-7FBCF511CFC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCareIdentity.Repository", "StudentHelpCare.Identity.Repository\StudentHelpCareIdentity.Repository.csproj", "{3486C5D4-7CE2-4979-B427-7FBCF511CFC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCare.Identity.Services", "StudentHelpCare.Identity.Services\StudentHelpCare.Identity.Services.csproj", "{DA1EDAE0-A1E9-42D9-8045-00B742C0E7D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCareIdentity.Services", "StudentHelpCare.Identity.Services\StudentHelpCareIdentity.Services.csproj", "{DA1EDAE0-A1E9-42D9-8045-00B742C0E7D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.Identity.UnitTesting", "StudentHelpCare.Identity.UnitTesting\StudentHelpCare.Identity.UnitTesting.csproj", "{F41119A9-3EFA-449E-9760-9F8F8DD592E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCareIdentity.UnitTesting", "StudentHelpCare.Identity.UnitTesting\StudentHelpCareIdentity.UnitTesting.csproj", "{F41119A9-3EFA-449E-9760-9F8F8DD592E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCare.Identity.ViewModel", "StudentHelpCare.Identity.ViewModel\StudentHelpCare.Identity.ViewModel.csproj", "{1AB3CCEF-0BB8-470D-B688-22CCD6294BA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentHelpCareIdentity.ViewModel", "StudentHelpCare.Identity.ViewModel\StudentHelpCareIdentity.ViewModel.csproj", "{1AB3CCEF-0BB8-470D-B688-22CCD6294BA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentHelpCare.Accessory", "StudentHelpCare.Accessory\StudentHelpCare.Accessory.csproj", "{2D563AE7-7B3A-450C-9A91-37794A854744}"
 EndProject
