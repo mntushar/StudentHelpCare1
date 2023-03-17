@@ -1,4 +1,5 @@
-﻿using StudentHelpCare.StudentHelpCareIdentityServer.Maps;
+﻿using StudentHelpCareIdentity.Maps.Account;
+using StudentHelpCareIdentityServer.Maps;
 
 namespace StudentHelpCare.StudentHelpCareIdentityServer.AppSetting
 {
@@ -8,6 +9,9 @@ namespace StudentHelpCare.StudentHelpCareIdentityServer.AppSetting
         {
             //initialise index map
             IndexMap.InitialiseIndexMap(app);
+
+            //initialise register map
+            RegisterUserMap.InitialiseRegisterMap(app);
 
             return app;
         }

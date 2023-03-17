@@ -1,4 +1,4 @@
-﻿namespace StudentHelpCare.StudentHelpCareIdentityServer.Maps
+﻿namespace StudentHelpCareIdentityServer.Maps
 {
     public static class IndexMap
     {

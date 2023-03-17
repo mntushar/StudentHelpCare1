@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using StudentHelpCare.Identity.Data.Entity;
+using StudentHelpCareIdentity.Data.Entity;
 
 namespace StudentHelpCare.Identity.Repository
 {

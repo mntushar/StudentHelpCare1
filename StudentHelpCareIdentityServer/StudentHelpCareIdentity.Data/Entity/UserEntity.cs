@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace StudentHelpCare.Identity.Data.Entity
+namespace StudentHelpCareIdentity.Data.Entity
 {
     public class UserEntity : IdentityUser
     {

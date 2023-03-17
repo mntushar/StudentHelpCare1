@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentHelpCare.Identity.Repository;
 using StudentHelpCare.StudentHelpCare.AppSetting;
 using StudentHelpCare.StudentHelpCareIdentityServer.AppSetting;
-using System;
+using StudentHelpCareIdentity.Data.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,7 @@ builder.Services.AddDbContext<StudentHelpCareIdentityDbContext>(options =>
 
 // Add services to the container.
 //configer Identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<UserEntity, Role>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<StudentHelpCareIdentityDbContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
