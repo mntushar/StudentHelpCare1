@@ -11,7 +11,7 @@ using StudentHelpCare.StudentHelpCare.Repository;
 namespace StudentHelpCare.Repository.Migrations
 {
     [DbContext(typeof(StudentHelpCareDbContext))]
-    [Migration("20230316093231_createStudentTable")]
+    [Migration("20230317014533_createStudentTable")]
     partial class createStudentTable
     {
         /// <inheritdoc />

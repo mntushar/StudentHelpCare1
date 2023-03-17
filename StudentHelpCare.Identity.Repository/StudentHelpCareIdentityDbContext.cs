@@ -19,8 +19,8 @@ namespace StudentHelpCare.Identity.Repository
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityUser>().ToTable("User");
-            builder.Entity<IdentityRole>().ToTable("Role");
+            builder.Entity<UserEntity>().ToTable("User");
+            builder.Entity<Role>().ToTable("Role");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRole");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");

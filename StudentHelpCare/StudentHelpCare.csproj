@@ -19,7 +19,6 @@
     <ProjectReference Include="..\StudentHelpCare.Library\StudentHelpCare.Library.csproj" />
     <ProjectReference Include="..\StudentHelpCare.Repository\StudentHelpCare.Repository.csproj" />
     <ProjectReference Include="..\StudentHelpCare.Services\StudentHelpCare.Services.csproj" />
-    <ProjectReference Include="..\StudentHelpCare.ViewModel\StudentHelpCare.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

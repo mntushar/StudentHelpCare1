@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "StudentHelpCare.ViewModel": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:55008;http://localhost:55009"
+    }
+  }
+}
