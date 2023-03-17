@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace StudentHelpCare.Identity.UnitTesting
+namespace StudentHelpCareIdentity.UnitTesting
 {
     [TestClass]
     public class UnitTest1

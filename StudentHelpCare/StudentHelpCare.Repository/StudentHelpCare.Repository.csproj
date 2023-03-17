@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentHelpCare.Data\StudentHelpCare.Data.csproj" />
+    <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\" />
+    <ProjectReference Include="..\StudentHelpCare.Data\StudentHelpCare.Data.csproj" />
   </ItemGroup>
 
 </Project>

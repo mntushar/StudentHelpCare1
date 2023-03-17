@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("StudentHelpCare.Identity.UnitTesting")]
+[assembly: AssemblyTitle("StudentHelpCareIdentity.UnitTesting")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("StudentHelpCare.Identity.UnitTesting")]
+[assembly: AssemblyProduct("StudentHelpCareIdentity.UnitTesting")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("f41119a9-3efa-449e-9760-9f8f8dd592e5")]
+[assembly: Guid("6d83ef7d-bc16-4e88-bd00-89e8df7d5217")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
