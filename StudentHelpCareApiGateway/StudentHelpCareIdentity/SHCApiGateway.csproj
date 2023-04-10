@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentHelpCareIdentity.Repository\StudentHelpCareIdentity.Repository.csproj" />
-    <ProjectReference Include="..\StudentHelpCareIdentity.Services\StudentHelpCareIdentity.Services.csproj" />
-    <ProjectReference Include="..\StudentHelpCareIdentity.ViewModel\StudentHelpCareIdentity.ViewModel.csproj" />
+    <ProjectReference Include="..\SHCApiGateway.Repository\SHCApiGateway.Repository.csproj" />
+    <ProjectReference Include="..\SHCApiGateway.Services\SHCApiGateway.Services.csproj" />
+    <ProjectReference Include="..\SHCApiGateway.ViewModel\SHCApiGateway.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

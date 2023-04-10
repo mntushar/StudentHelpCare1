@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentHelpCareIdentity.Data\StudentHelpCareIdentity.Data.csproj" />
+    <ProjectReference Include="..\SHCApiGateway.Data\SHCApiGateway.Data.csproj" />
   </ItemGroup>
 
 </Project>

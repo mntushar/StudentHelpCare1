@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentHelpCareIdentity.Data\StudentHelpCareIdentity.Data.csproj" />
-    <ProjectReference Include="..\StudentHelpCareIdentity.ViewModel\StudentHelpCareIdentity.ViewModel.csproj" />
+    <ProjectReference Include="..\SHCApiGateway.Data\SHCApiGateway.Data.csproj" />
+    <ProjectReference Include="..\SHCApiGateway.ViewModel\SHCApiGateway.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>
