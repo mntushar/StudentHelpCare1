@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace StudentHelpCareIdentity.ViewModel.User
+﻿namespace SHCApiGateway.ViewModel.User
 {
     public class UserDto
     {
-        public static IdentityUser Map(UserViewModel viewModel)
+        public static SHCApiGateway.Data.Entity.User Map(UserViewModel viewModel)
         {
-            if (viewModel == null) { return new IdentityUser(); }
+            if (viewModel == null) { return new SHCApiGateway.Data.Entity.User(); }
 
-            return new IdentityUser()
+            return new SHCApiGateway.Data.Entity.User()
             {
                 Id = viewModel.Id,
                 UserName = viewModel.UserName,
@@ -17,7 +15,7 @@ namespace StudentHelpCareIdentity.ViewModel.User
             };
         }
 
-        public static UserViewModel Map(IdentityUser dataEntity)
+        public static UserViewModel Map(SHCApiGateway.Data.Entity.User dataEntity)
         {
             if (dataEntity == null) { return new UserViewModel(); }
 
@@ -30,7 +28,7 @@ namespace StudentHelpCareIdentity.ViewModel.User
             };
         }
 
-        public static IEnumerable<UserViewModel> Map(IEnumerable<IdentityUser> dataEntityList)
+        public static IEnumerable<UserViewModel> Map(IEnumerable<SHCApiGateway.Data.Entity.User> dataEntityList)
         {
             if (dataEntityList == null) { yield break; }
 

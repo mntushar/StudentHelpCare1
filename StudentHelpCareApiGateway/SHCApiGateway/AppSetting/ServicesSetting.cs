@@ -1,5 +1,5 @@
-﻿using StudentHelpCareIdentity.Services.Iservices;
-using StudentHelpCareIdentity.Services.Services;
+﻿using SHCApiGateway.Services.Iservices;
+using SHCApiGateway.Services.Services;
 
 namespace StudentHelpCare.StudentHelpCare.AppSetting
 {

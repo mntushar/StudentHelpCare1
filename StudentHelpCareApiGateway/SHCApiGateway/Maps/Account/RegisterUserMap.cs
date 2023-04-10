@@ -1,5 +1,5 @@
-﻿using StudentHelpCareIdentity.Services.Iservices;
-using StudentHelpCareIdentity.ViewModel.User;
+﻿using SHCApiGateway.Services.Iservices;
+using SHCApiGateway.ViewModel.User;
 
 namespace StudentHelpCareIdentity.Maps.Account
 {

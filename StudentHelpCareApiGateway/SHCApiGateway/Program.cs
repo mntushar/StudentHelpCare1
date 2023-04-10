@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using StudentHelpCare.Identity.Repository;
+using SHCApiGateway.Data.Entity;
+using SHCApiGateway.Repository;
 using StudentHelpCare.StudentHelpCare.AppSetting;
 using StudentHelpCare.StudentHelpCareIdentityServer.AppSetting;
 
@@ -12,7 +13,7 @@ builder.Services.AddDbContext<SHCApiGatewayDbContext>(options =>
 
 // Add services to the container.
 //configer Identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<User, UserRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<SHCApiGatewayDbContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {

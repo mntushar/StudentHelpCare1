@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using StudentHelpCareIdentity.Services.Iservices;
-using StudentHelpCareIdentity.ViewModel.User;
+using SHCApiGateway.Data.Entity;
+using SHCApiGateway.Services.Iservices;
+using SHCApiGateway.ViewModel.User;
 
-namespace StudentHelpCareIdentity.Services.Services
+namespace SHCApiGateway.Services.Services
 {
     public class UserServices : IUserServices
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<UserServices> _logger;
 
         public UserServices(
-        UserManager<IdentityUser> userManager,
+        UserManager<User> userManager,
         ILogger<UserServices> logger)
         {
             _userManager = userManager;
@@ -27,7 +28,7 @@ namespace StudentHelpCareIdentity.Services.Services
             {
                 if (user != null)
                 {
-                    var userData = new IdentityUser
+                    var userData = new User
                     {
                         UserName = user.UserName,
                         Email = user.Email,

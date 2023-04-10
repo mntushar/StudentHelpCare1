@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SHCApiGateway.Data.Entity;
 
-namespace StudentHelpCare.Identity.Repository
+namespace SHCApiGateway.Repository
 {
-    public class SHCApiGatewayDbContext : IdentityDbContext
+    public class SHCApiGatewayDbContext : IdentityDbContext<User, UserRole, string>
     {
+        public DbSet<User> User { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
+
         public SHCApiGatewayDbContext(DbContextOptions<SHCApiGatewayDbContext> options)
         : base(options)
         {
@@ -15,8 +19,8 @@ namespace StudentHelpCare.Identity.Repository
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityUser>().ToTable("User");
-            builder.Entity<IdentityRole>().ToTable("Role");
+            builder.Entity<User>().ToTable("User");
+            builder.Entity<UserRole>().ToTable("Role");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRole");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");

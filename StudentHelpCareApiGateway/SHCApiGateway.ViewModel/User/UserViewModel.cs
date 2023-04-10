@@ -1,4 +1,4 @@
-﻿namespace StudentHelpCareIdentity.ViewModel.User
+﻿namespace SHCApiGateway.ViewModel.User
 {
     public class UserViewModel
     {

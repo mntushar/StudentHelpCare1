@@ -1,6 +1,6 @@
-﻿using StudentHelpCareIdentity.ViewModel.User;
+﻿using SHCApiGateway.ViewModel.User;
 
-namespace StudentHelpCareIdentity.Services.Iservices
+namespace SHCApiGateway.Services.Iservices
 {
     public interface IUserServices
     {
