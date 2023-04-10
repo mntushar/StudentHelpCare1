@@ -14,7 +14,7 @@ namespace StudentHelpCareIdentity.Maps.Account
             return app;
         }
 
-        private static async Task<IResult> CreateUser(IRegisterUserServices registerServices, UserViewModel user)
+        private static async Task<IResult> CreateUser(IUserServices registerServices, UserViewModel user)
         {
             return TypedResults.Ok(await registerServices.CreateUser(user));
         }

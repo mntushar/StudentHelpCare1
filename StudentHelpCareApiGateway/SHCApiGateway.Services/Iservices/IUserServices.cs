@@ -2,7 +2,7 @@
 
 namespace StudentHelpCareIdentity.Services.Iservices
 {
-    public interface IRegisterUserServices
+    public interface IUserServices
     {
         Task<string> CreateUser(UserViewModel user);
     }

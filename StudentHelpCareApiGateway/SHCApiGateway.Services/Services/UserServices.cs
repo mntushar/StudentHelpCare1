@@ -1,19 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using StudentHelpCareIdentity.Data.Entity;
 using StudentHelpCareIdentity.Services.Iservices;
 using StudentHelpCareIdentity.ViewModel.User;
 
 namespace StudentHelpCareIdentity.Services.Services
 {
-    public class RegisterUserServices : IRegisterUserServices
+    public class UserServices : IUserServices
     {
-        private readonly UserManager<UserEntity> _userManager;
-        private readonly ILogger<RegisterUserServices> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<UserServices> _logger;
 
-        public RegisterUserServices(
-        UserManager<UserEntity> userManager,
-        ILogger<RegisterUserServices> logger)
+        public UserServices(
+        UserManager<IdentityUser> userManager,
+        ILogger<UserServices> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -28,7 +27,7 @@ namespace StudentHelpCareIdentity.Services.Services
             {
                 if (user != null)
                 {
-                    var userData = new UserEntity
+                    var userData = new IdentityUser
                     {
                         UserName = user.UserName,
                         Email = user.Email,

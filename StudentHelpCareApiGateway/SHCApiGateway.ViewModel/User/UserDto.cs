@@ -1,14 +1,14 @@
-﻿using StudentHelpCareIdentity.Data.Entity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace StudentHelpCareIdentity.ViewModel.User
 {
     public class UserDto
     {
-        public static UserEntity Map(UserViewModel viewModel)
+        public static IdentityUser Map(UserViewModel viewModel)
         {
-            if (viewModel == null) { return new UserEntity(); }
+            if (viewModel == null) { return new IdentityUser(); }
 
-            return new UserEntity()
+            return new IdentityUser()
             {
                 Id = viewModel.Id,
                 UserName = viewModel.UserName,
@@ -17,7 +17,7 @@ namespace StudentHelpCareIdentity.ViewModel.User
             };
         }
 
-        public static UserViewModel Map(UserEntity dataEntity)
+        public static UserViewModel Map(IdentityUser dataEntity)
         {
             if (dataEntity == null) { return new UserViewModel(); }
 
@@ -30,7 +30,7 @@ namespace StudentHelpCareIdentity.ViewModel.User
             };
         }
 
-        public static IEnumerable<UserViewModel> Map(IEnumerable<UserEntity> dataEntityList)
+        public static IEnumerable<UserViewModel> Map(IEnumerable<IdentityUser> dataEntityList)
         {
             if (dataEntityList == null) { yield break; }
 

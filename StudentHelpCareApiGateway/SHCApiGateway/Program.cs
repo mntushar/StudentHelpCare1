@@ -3,18 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using StudentHelpCare.Identity.Repository;
 using StudentHelpCare.StudentHelpCare.AppSetting;
 using StudentHelpCare.StudentHelpCareIdentityServer.AppSetting;
-using StudentHelpCareIdentity.Data.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //configer dbContext
-builder.Services.AddDbContext<StudentHelpCareIdentityDbContext>(options =>
+builder.Services.AddDbContext<SHCApiGatewayDbContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 //configer Identity
-builder.Services.AddIdentity<UserEntity, Role>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<StudentHelpCareIdentityDbContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<SHCApiGatewayDbContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
