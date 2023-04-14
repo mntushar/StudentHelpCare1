@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SHCApiGateway.Library\SHCApiGateway.Library.csproj" />
     <ProjectReference Include="..\SHCApiGateway.Repository\SHCApiGateway.Repository.csproj" />
     <ProjectReference Include="..\SHCApiGateway.Services\SHCApiGateway.Services.csproj" />
     <ProjectReference Include="..\SHCApiGateway.ViewModel\SHCApiGateway.ViewModel.csproj" />
