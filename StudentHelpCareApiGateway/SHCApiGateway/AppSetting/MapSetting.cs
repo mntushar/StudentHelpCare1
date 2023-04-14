@@ -1,4 +1,4 @@
-﻿using StudentHelpCareIdentity.Maps.Account;
+﻿using SHCApiGateway.Maps;
 using StudentHelpCareIdentityServer.Maps;
 
 namespace StudentHelpCare.StudentHelpCareIdentityServer.AppSetting
@@ -11,7 +11,7 @@ namespace StudentHelpCare.StudentHelpCareIdentityServer.AppSetting
             IndexMap.InitialiseIndexMap(app);
 
             //initialise register map
-            RegisterUserMap.InitialiseRegisterMap(app);
+            UserMap.InitialiseRegisterMap(app);
 
             return app;
         }

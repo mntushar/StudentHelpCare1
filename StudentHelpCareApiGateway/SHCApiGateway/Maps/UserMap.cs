@@ -1,9 +1,9 @@
 ﻿using SHCApiGateway.Services.Iservices;
 using SHCApiGateway.ViewModel.User;
 
-namespace StudentHelpCareIdentity.Maps.Account
+namespace SHCApiGateway.Maps
 {
-    public static class RegisterUserMap
+    public static class UserMap
     {
         public static WebApplication InitialiseRegisterMap(WebApplication app)
         {
