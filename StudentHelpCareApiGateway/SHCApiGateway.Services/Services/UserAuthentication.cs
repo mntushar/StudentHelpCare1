@@ -42,7 +42,7 @@ namespace SHCApiGateway.Services.Services
                         IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
 
                         //Generate Symmetric Jwt Token
-                        success = Token.GenerateSymmetricJwtToken(user, roleList, ClaimTypes);
+                        success = Token.GenerateDefaultSymmetricJwtToken(user, roleList, ClaimTypes);
                     }
                 }
                 else

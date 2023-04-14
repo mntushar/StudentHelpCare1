@@ -48,17 +48,20 @@ namespace SHCApiGateway.Library
             return tokenString;
         }
 
-        public static string GenerateSymmetricJwtToken(User user, IList<string> roleList,
+        public static string GenerateDefaultSymmetricJwtToken(User user, IList<string> roleList,
             IList<System.Security.Claims.Claim> ClaimTypes)
         {
             string token = string.Empty;
-            string role = string.Join(",", roleList.Select(r => r.ToString()));
-            string claim = string.Join(",", ClaimTypes.Select(c => c.ToString()));
 
-            if (user != null)
+            try
             {
-                var clims = new[]
+                string role = string.Join(",", roleList.Select(r => r.ToString()));
+                string claim = string.Join(",", ClaimTypes.Select(c => c.ToString()));
+
+                if (user != null)
                 {
+                    var clims = new[]
+                    {
                     new Claim("claim-type", user.Id),
                     new Claim("name", user.UserName!),
                     new Claim("email", user.Email!),
@@ -67,11 +70,15 @@ namespace SHCApiGateway.Library
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                token = GenerateJWTSymmetricToken(clims, ApiGatewayInformation.jwtSymmetricTokenKry,
-                             DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
-                             ApiGatewayInformation.url);
+                    token = GenerateJWTSymmetricToken(clims, ApiGatewayInformation.jwtSymmetricTokenKry,
+                                 DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
+                                 ApiGatewayInformation.url);
+                }
             }
-
+            catch(Exception ex)
+            {
+                _Logger.LogError(ex, "Token Error", ex);
+            }
 
             return token;
         }

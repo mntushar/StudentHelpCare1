@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SHCApiGateway.Data.Entity;
 
-namespace SHCApiGateway.Repository
+namespace SHCApiGateway.Repository.DbContext
 {
     public class SHCApiGatewayDbContext : IdentityDbContext<User, UserRole, string>
     {
@@ -26,6 +26,8 @@ namespace SHCApiGateway.Repository
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("UserRoleClaim");
             builder.Entity<IdentityUserClaim<string>>().ToTable("UserClim");
+
+            SeedData.ConfigSeedData(builder);
         }
     }
 }

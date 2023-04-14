@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SHCApiGateway.Data.Entity;
-using SHCApiGateway.Repository;
+using SHCApiGateway.Repository.DbContext;
 using StudentHelpCare.StudentHelpCare.AppSetting;
 using StudentHelpCare.StudentHelpCareIdentityServer.AppSetting;
 
