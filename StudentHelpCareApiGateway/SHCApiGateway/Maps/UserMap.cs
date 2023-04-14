@@ -7,7 +7,7 @@ namespace SHCApiGateway.Maps
     {
         public static WebApplication InitialiseRegisterMap(WebApplication app)
         {
-            var registerMap = app.MapGroup("/register");
+            var registerMap = app.MapGroup("/user");
 
             registerMap.MapPost("/registerUser", CreateUser);
 
