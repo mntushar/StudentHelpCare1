@@ -5,11 +5,8 @@ using SHCApiGateway.Data.Entity;
 
 namespace SHCApiGateway.Repository.DbContext
 {
-    public class SHCApiGatewayDbContext : IdentityDbContext<User, UserRole, string>
+    public class SHCApiGatewayDbContext : IdentityDbContext<User, Role, string>
     {
-        public DbSet<User> User { get; set; }
-        public DbSet<UserRole> UserRole { get; set; }
-
         public SHCApiGatewayDbContext(DbContextOptions<SHCApiGatewayDbContext> options)
         : base(options)
         {
@@ -20,7 +17,7 @@ namespace SHCApiGateway.Repository.DbContext
             base.OnModelCreating(builder);
 
             builder.Entity<User>().ToTable("User");
-            builder.Entity<UserRole>().ToTable("Role");
+            builder.Entity<Role>().ToTable("Role");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserToken");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRole");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogin");

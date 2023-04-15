@@ -1,42 +1,42 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace SHCApiGateway.ViewModel.UserClim
+namespace SHCApiGateway.ViewModel.UserRoleClaim
 {
-    public class UserClimDto
+    public class UserRoleClaimDto
     {
-        public static IdentityUserClaim<string> Map(
-            UserClimViewModel viewModel)
+        public static IdentityRoleClaim<string> Map(
+           UserRoleClaimViewModel viewModel)
         {
             if (viewModel == null)
             {
                 return
-                    new IdentityUserClaim<string>();
+                    new IdentityRoleClaim<string>();
             }
 
-            return new IdentityUserClaim<string>()
+            return new IdentityRoleClaim<string>()
             {
                 Id = viewModel.Id,
-                UserId = viewModel.UserId,
+                RoleId = viewModel.RoleId,
                 ClaimType = viewModel.ClaimType,
                 ClaimValue = viewModel.ClaimValue,
             };
         }
 
-        public static UserClimViewModel Map(
-            IdentityUserClaim<string> dataEntity)
+        public static UserRoleClaimViewModel Map(
+            IdentityRoleClaim<string> dataEntity)
         {
-            if (dataEntity == null) { return new UserClimViewModel(); }
+            if (dataEntity == null) { return new UserRoleClaimViewModel(); }
 
-            return new UserClimViewModel()
+            return new UserRoleClaimViewModel()
             {
                 Id = dataEntity.Id,
-                UserId = dataEntity.UserId,
+                RoleId = dataEntity.RoleId,
                 ClaimType = dataEntity.ClaimType,
                 ClaimValue = dataEntity.ClaimValue,
             };
         }
 
-        public static IEnumerable<UserClimViewModel> Map(IEnumerable<IdentityUserClaim<string>> dataEntityList)
+        public static IEnumerable<UserRoleClaimViewModel> Map(IEnumerable<IdentityRoleClaim<string>> dataEntityList)
         {
             if (dataEntityList == null) { yield break; }
 

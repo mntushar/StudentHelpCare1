@@ -13,7 +13,7 @@ builder.Services.AddDbContext<SHCApiGatewayDbContext>(options =>
 
 // Add services to the container.
 //configer Identity
-builder.Services.AddIdentity<User, UserRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<SHCApiGatewayDbContext>();
 builder.Services.Configure<IdentityOptions>(options =>
 {

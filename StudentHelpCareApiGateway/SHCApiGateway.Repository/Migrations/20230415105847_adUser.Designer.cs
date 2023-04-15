@@ -12,15 +12,15 @@ using SHCApiGateway.Repository.DbContext;
 namespace SHCApiGateway.Repository.Migrations
 {
     [DbContext(typeof(SHCApiGatewayDbContext))]
-    [Migration("20230414101747_adUse")]
-    partial class adUse
+    [Migration("20230415105847_adUser")]
+    partial class adUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -131,6 +131,33 @@ namespace SHCApiGateway.Repository.Migrations
                     b.ToTable("UserToken", (string)null);
                 });
 
+            modelBuilder.Entity("SHCApiGateway.Data.Entity.Role", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("Role", (string)null);
+                });
+
             modelBuilder.Entity("SHCApiGateway.Data.Entity.User", b =>
                 {
                     b.Property<string>("Id")
@@ -196,36 +223,9 @@ namespace SHCApiGateway.Repository.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("SHCApiGateway.Data.Entity.UserRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("Role", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("SHCApiGateway.Data.Entity.UserRole", null)
+                    b.HasOne("SHCApiGateway.Data.Entity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -252,7 +252,7 @@ namespace SHCApiGateway.Repository.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("SHCApiGateway.Data.Entity.UserRole", null)
+                    b.HasOne("SHCApiGateway.Data.Entity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

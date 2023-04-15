@@ -1,38 +1,38 @@
-﻿namespace SHCApiGateway.ViewModel.UserRole
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace SHCApiGateway.ViewModel.UserRole
 {
     public class UserRoleDto
     {
-        public static SHCApiGateway.Data.Entity.UserRole Map(
-            UserRoleViewModel viewModel)
+        public static IdentityUserRole<string> Map(
+           UserRoleViewModel viewModel)
         {
             if (viewModel == null)
             {
                 return
-                    new SHCApiGateway.Data.Entity.UserRole();
+                    new IdentityUserRole<string>();
             }
 
-            return new SHCApiGateway.Data.Entity.UserRole()
+            return new IdentityUserRole<string>()
             {
-                Id = viewModel.Id,
-                Name = viewModel.Name,
-                NormalizedName = viewModel.NormalizedName,
+                UserId = viewModel.UserId,
+                RoleId = viewModel.RoleId,
             };
         }
 
         public static UserRoleViewModel Map(
-            SHCApiGateway.Data.Entity.UserRole dataEntity)
+            IdentityUserRole<string> dataEntity)
         {
             if (dataEntity == null) { return new UserRoleViewModel(); }
 
             return new UserRoleViewModel()
             {
-                Id = dataEntity.Id,
-                Name = dataEntity.Name,
-                NormalizedName = dataEntity.NormalizedName,
+                UserId = dataEntity.UserId,
+                RoleId = dataEntity.RoleId,
             };
         }
 
-        public static IEnumerable<UserRoleViewModel> Map(IEnumerable<SHCApiGateway.Data.Entity.UserRole> dataEntityList)
+        public static IEnumerable<UserRoleViewModel> Map(IEnumerable<IdentityUserRole<string>> dataEntityList)
         {
             if (dataEntityList == null) { yield break; }
 
