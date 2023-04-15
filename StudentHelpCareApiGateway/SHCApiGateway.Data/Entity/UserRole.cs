@@ -2,7 +2,7 @@
 
 namespace SHCApiGateway.Data.Entity
 {
-    public class UserRole : IdentityRole<string>
+    public class UserRole : IdentityRole
     {
     }
 }

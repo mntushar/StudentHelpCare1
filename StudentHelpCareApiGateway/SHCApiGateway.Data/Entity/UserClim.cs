@@ -2,7 +2,7 @@
 
 namespace SHCApiGateway.Data.Entity
 {
-    public class User : IdentityUser
+    public class UserClim : IdentityUserClaim<string>
     {
     }
 }
