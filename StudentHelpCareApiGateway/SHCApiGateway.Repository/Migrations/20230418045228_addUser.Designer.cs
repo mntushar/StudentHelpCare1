@@ -12,8 +12,8 @@ using SHCApiGateway.Repository.DbContext;
 namespace SHCApiGateway.Repository.Migrations
 {
     [DbContext(typeof(SHCApiGatewayDbContext))]
-    [Migration("20230415105847_adUser")]
-    partial class adUser
+    [Migration("20230418045228_addUser")]
+    partial class addUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

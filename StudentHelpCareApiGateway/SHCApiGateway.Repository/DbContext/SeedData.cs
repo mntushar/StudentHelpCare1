@@ -1,36 +1,33 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using SHCApiGateway.Data.Entity;
+using System.Runtime.CompilerServices;
 
 namespace SHCApiGateway.Repository.DbContext
 {
     public static class SeedData
     {
-        private static User[] Users =
+        private static readonly IServiceProvider _serviceProvider;
+        private static User userseed = new User()
         {
-            new User()
-            {
-                Id = "c62b9487-35d8-4eef-88c2-70cad782bd78",
-                UserName = "admin",
-                Email = "admin@gmail.com",
-                PasswordHash = "AQAAAAIAAYagAAAAEE9LPh5DjDPDNs8ccnYgnvbE30OlLT8Spv0ku5edvP/ejhk4nx83r6UeO5840bMJXA=="
-            },
+            UserName = "admin",
+            Email = "admin@gmail.com",
+            //password 123
+            PhoneNumber = "123456",
+            LockoutEnabled = false,
+            AccessFailedCount = 0,
         };
-        private static Role[] roles =
+        private static Role roles = new Role()
         {
-            new Role()
-            {
-                Id = "1",
-                Name = "AdminRole",
-                NormalizedName = "admin",
-            }
+            Name = "AdminRole",
         };
         private static IdentityUserRole<string>[] userRols =
         {
             new IdentityUserRole<string>()
             {
-                UserId = "c62b9487-35d8-4eef-88c2-70cad782bd78",
-                RoleId = "1"
+                UserId = "3d33b832-8ffa-4ca1-9188-32d77fbf2685",
+                RoleId = "3d33b832-8ffa-4ca1-9188-32d77fbf2685"
             }
         };
         private static IdentityUserClaim<string>[] userClims =
@@ -69,11 +66,17 @@ namespace SHCApiGateway.Repository.DbContext
         };
 
 
+        public static void Initialize(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider.GetService<SHCApiGatewayDbContext>();
+        }
+
         public static void ConfigSeedData(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(roles);
-            modelBuilder.Entity<User>().HasData(userRols);
-            modelBuilder.Entity<User>().HasData(userClims);
+            //modelBuilder.Entity<User>().HasData(Users);
+            //modelBuilder.Entity<User>().HasData(roles);
+            //modelBuilder.Entity<User>().HasData(userRols);
+            //modelBuilder.Entity<User>().HasData(userClims);
         }
     }
 }

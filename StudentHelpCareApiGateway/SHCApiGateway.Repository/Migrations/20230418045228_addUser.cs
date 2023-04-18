@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SHCApiGateway.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class adUser : Migration
+    public partial class addUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
