@@ -12,7 +12,7 @@ namespace SHCApiGateway.Repository.DbContext
             UserName = "Admin",
             Email = "admin@gmail.com",
             NormalizedUserName = "Admin".ToUpper(),
-            NormalizedEmail = "Admin".ToUpper(),
+            NormalizedEmail = "admin@gmail.com".ToUpper(),
             //passwotd 123
             PasswordHash = "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==",
             EmailConfirmed = false,
