@@ -15,6 +15,8 @@ builder.Services.AddDbContext<SHCApiGatewayDbContext>(options =>
 //configer Identity
 builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<SHCApiGatewayDbContext>();
+builder.Services.AddRazorPages();
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
@@ -31,11 +33,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Lockout.AllowedForNewUsers = false;
 
     // User settings.
-    options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    //options.User.AllowedUserNameCharacters =
+    //"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     options.User.RequireUniqueEmail = true;
 });
-builder.Services.AddRazorPages();
 
 //third party library
 builder.Services.AddEndpointsApiExplorer();
