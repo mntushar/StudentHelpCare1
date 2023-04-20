@@ -1,64 +1,70 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using SHCApiGateway.Data.Entity;
-using System.Runtime.CompilerServices;
 
 namespace SHCApiGateway.Repository.DbContext
 {
     public static class SeedData
     {
-        private static readonly IServiceProvider _serviceProvider;
-        private static User userseed = new User()
+        private static User userSeed = new User()
         {
-            UserName = "admin",
+            Id = "72f14134-1611-499f-a58f-a5c4299b8b15",
+            UserName = "Admin",
             Email = "admin@gmail.com",
-            //password 123
-            PhoneNumber = "123456",
+            NormalizedUserName = "Admin123@gmail.com".ToUpper(),
+            NormalizedEmail = "Admin".ToUpper(),
+            //passwotd 123
+            PasswordHash = "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==",
+            EmailConfirmed = false,
             LockoutEnabled = false,
-            AccessFailedCount = 0,
+            PhoneNumberConfirmed = false,
+            SecurityStamp = "TCWKAWXAIBHYIIH2RDDGUH3HWJSATRLC"
         };
-        private static Role roles = new Role()
+
+        private static Role role = new Role()
         {
+            Id = "4b65e0d2-5c89-41e1-8505-fe956483e735",
             Name = "AdminRole",
+            NormalizedName = "admin",
+            ConcurrencyStamp = "233e96aa-a060-43d5-b306-5a6309f88395"
         };
-        private static IdentityUserRole<string>[] userRols =
+
+        private static IdentityUserRole<string> userRols = new IdentityUserRole<string>()
         {
-            new IdentityUserRole<string>()
-            {
-                UserId = "3d33b832-8ffa-4ca1-9188-32d77fbf2685",
-                RoleId = "3d33b832-8ffa-4ca1-9188-32d77fbf2685"
-            }
+            UserId = "72f14134-1611-499f-a58f-a5c4299b8b15",
+            RoleId = "4b65e0d2-5c89-41e1-8505-fe956483e735"
         };
+
+
         private static IdentityUserClaim<string>[] userClims =
         {
             new IdentityUserClaim<string>()
             {
                 Id = 1,
-                UserId = "c62b9487-35d8-4eef-88c2-70cad782bd78",
+                UserId = "72f14134-1611-499f-a58f-a5c4299b8b15",
                 ClaimType = "Rred",
                 ClaimValue = "true"
 
             },
             new IdentityUserClaim<string>()
             {
-                Id = 1,
-                UserId = "c62b9487-35d8-4eef-88c2-70cad782bd78",
+                Id = 2,
+                UserId = "72f14134-1611-499f-a58f-a5c4299b8b15",
                 ClaimType = "Write",
                 ClaimValue = "true"
             },
             new IdentityUserClaim<string>()
             {
-                Id = 1,
-                UserId = "c62b9487-35d8-4eef-88c2-70cad782bd78",
+                Id = 3,
+                UserId = "72f14134-1611-499f-a58f-a5c4299b8b15",
                 ClaimType = "Edit",
                 ClaimValue = "true"
 
             },
             new IdentityUserClaim<string>()
             {
-                Id = 1,
-                UserId = "c62b9487-35d8-4eef-88c2-70cad782bd78",
+                Id = 4,
+                UserId = "72f14134-1611-499f-a58f-a5c4299b8b15",
                 ClaimType = "Delete",
                 ClaimValue = "true"
 
@@ -66,17 +72,13 @@ namespace SHCApiGateway.Repository.DbContext
         };
 
 
-        public static void Initialize(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider.GetService<SHCApiGatewayDbContext>();
-        }
-
         public static void ConfigSeedData(this ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().HasData(Users);
-            //modelBuilder.Entity<User>().HasData(roles);
-            //modelBuilder.Entity<User>().HasData(userRols);
-            //modelBuilder.Entity<User>().HasData(userClims);
+            modelBuilder.Entity<User>().HasData(userSeed);
+            modelBuilder.Entity<Role>().HasData(role);
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRols);
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(userClims);
+
         }
     }
 }

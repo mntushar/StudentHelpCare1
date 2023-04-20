@@ -80,9 +80,9 @@ namespace SHCApiGateway.Services.Services
 
                 var roleData = new Role()
                 {
-                    Id = role.Id,
                     Name = role.Name,
                     NormalizedName = role.NormalizedName,
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
                 };
 
                 var result = await _roleManager.CreateAsync(roleData);

@@ -31,7 +31,7 @@ namespace SHCApiGateway.Maps
                 return TypedResults.BadRequest(result);
             }
 
-            return TypedResults.Created(result);
+            return TypedResults.Ok(result);
         }
 
         private static async Task<IResult> CreateRole(IUserServices registerServices, RoleViewModel role)
@@ -48,7 +48,7 @@ namespace SHCApiGateway.Maps
                 return TypedResults.BadRequest(result);
             }
 
-            return TypedResults.Created(result);
+            return TypedResults.Ok(result);
         }
     }
 }

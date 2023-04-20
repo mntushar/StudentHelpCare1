@@ -70,6 +70,36 @@ namespace SHCApiGateway.Repository.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserClim", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "Rred",
+                            ClaimValue = "true",
+                            UserId = "72f14134-1611-499f-a58f-a5c4299b8b15"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "Write",
+                            ClaimValue = "true",
+                            UserId = "72f14134-1611-499f-a58f-a5c4299b8b15"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "Edit",
+                            ClaimValue = "true",
+                            UserId = "72f14134-1611-499f-a58f-a5c4299b8b15"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "Delete",
+                            ClaimValue = "true",
+                            UserId = "72f14134-1611-499f-a58f-a5c4299b8b15"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -107,6 +137,13 @@ namespace SHCApiGateway.Repository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "72f14134-1611-499f-a58f-a5c4299b8b15",
+                            RoleId = "4b65e0d2-5c89-41e1-8505-fe956483e735"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -153,6 +190,15 @@ namespace SHCApiGateway.Repository.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Role", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4b65e0d2-5c89-41e1-8505-fe956483e735",
+                            ConcurrencyStamp = "233e96aa-a060-43d5-b306-5a6309f88395",
+                            Name = "AdminRole",
+                            NormalizedName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("SHCApiGateway.Data.Entity.User", b =>
@@ -218,6 +264,24 @@ namespace SHCApiGateway.Repository.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "72f14134-1611-499f-a58f-a5c4299b8b15",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ef5ac4ad-9f95-472f-874d-7634f2ef3072",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN",
+                            NormalizedUserName = "ADMIN123@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "TCWKAWXAIBHYIIH2RDDGUH3HWJSATRLC",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
