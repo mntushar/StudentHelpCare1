@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using SHCApiGateway.Data.Model;
 using StudentHelpCare.Identity.Data.Model;
 
 namespace SHCApiGateway.Services.Iservices
 {
     public interface IUserAuthentication
     {
-        Task<JObject> UserLogin(UserLoginModel userLogin);
+        Task<AuthenticationResult> UserLogin(UserLoginModel userLogin);
     }
 }
