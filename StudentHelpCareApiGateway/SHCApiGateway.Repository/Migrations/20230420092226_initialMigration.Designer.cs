@@ -12,8 +12,8 @@ using SHCApiGateway.Repository.DbContext;
 namespace SHCApiGateway.Repository.Migrations
 {
     [DbContext(typeof(SHCApiGatewayDbContext))]
-    [Migration("20230420071059_initialMigraion")]
-    partial class initialMigraion
+    [Migration("20230420092226_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -185,6 +185,10 @@ namespace SHCApiGateway.Repository.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("RoleType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
@@ -199,8 +203,9 @@ namespace SHCApiGateway.Repository.Migrations
                         {
                             Id = "4b65e0d2-5c89-41e1-8505-fe956483e735",
                             ConcurrencyStamp = "233e96aa-a060-43d5-b306-5a6309f88395",
-                            Name = "AdminRole",
-                            NormalizedName = "admin"
+                            Name = "admin",
+                            NormalizedName = "admin",
+                            RoleType = "AdminRole"
                         });
                 });
 
@@ -273,12 +278,12 @@ namespace SHCApiGateway.Repository.Migrations
                         {
                             Id = "72f14134-1611-499f-a58f-a5c4299b8b15",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef5ac4ad-9f95-472f-874d-7634f2ef3072",
+                            ConcurrencyStamp = "a071197f-2ec1-474c-808e-9163a557dd8e",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN",
-                            NormalizedUserName = "ADMIN123@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "TCWKAWXAIBHYIIH2RDDGUH3HWJSATRLC",

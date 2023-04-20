@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SHCApiGateway.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigraion : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,7 @@ namespace SHCApiGateway.Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -160,13 +161,13 @@ namespace SHCApiGateway.Repository.Migrations
 
             migrationBuilder.InsertData(
                 table: "Role",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "4b65e0d2-5c89-41e1-8505-fe956483e735", "233e96aa-a060-43d5-b306-5a6309f88395", "AdminRole", "admin" });
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName", "RoleType" },
+                values: new object[] { "4b65e0d2-5c89-41e1-8505-fe956483e735", "233e96aa-a060-43d5-b306-5a6309f88395", "admin", "admin", "AdminRole" });
 
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "72f14134-1611-499f-a58f-a5c4299b8b15", 0, "ef5ac4ad-9f95-472f-874d-7634f2ef3072", "admin@gmail.com", false, false, null, "ADMIN", "ADMIN123@GMAIL.COM", "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==", null, false, "TCWKAWXAIBHYIIH2RDDGUH3HWJSATRLC", false, "Admin" });
+                values: new object[] { "72f14134-1611-499f-a58f-a5c4299b8b15", 0, "a071197f-2ec1-474c-808e-9163a557dd8e", "admin@gmail.com", false, false, null, "ADMIN", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==", null, false, "TCWKAWXAIBHYIIH2RDDGUH3HWJSATRLC", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "UserClim",

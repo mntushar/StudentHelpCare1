@@ -24,8 +24,9 @@ namespace SHCApiGateway.Repository.DbContext
         private static Role role = new Role()
         {
             Id = "4b65e0d2-5c89-41e1-8505-fe956483e735",
-            Name = "AdminRole",
-            NormalizedName = "admin",
+            RoleType = "AdminRole",
+            Name = "admin",
+            NormalizedName = "admin".ToUpper(),
             ConcurrencyStamp = "233e96aa-a060-43d5-b306-5a6309f88395"
         };
 

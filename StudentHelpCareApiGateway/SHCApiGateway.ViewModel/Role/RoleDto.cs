@@ -16,6 +16,7 @@ namespace SHCApiGateway.ViewModel.UserRole
             return new Role()
             {
                 Id = viewModel.Id,
+                RoleType = viewModel.RoleType,
                 Name = viewModel.Name,
                 NormalizedName = viewModel.NormalizedName,
             };
@@ -29,6 +30,7 @@ namespace SHCApiGateway.ViewModel.UserRole
             return new RoleViewModel()
             {
                 Id = dataEntity.Id,
+                RoleType = dataEntity.RoleType,
                 Name = dataEntity.Name,
                 NormalizedName = dataEntity.NormalizedName,
             };
