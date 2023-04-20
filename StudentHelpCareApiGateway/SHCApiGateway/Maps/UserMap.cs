@@ -1,4 +1,4 @@
-﻿using SHCApiGateway.Data.Entity;
+﻿using SHCApiGateway.Data.Model;
 using SHCApiGateway.Services.Iservices;
 using SHCApiGateway.ViewModel.User;
 using SHCApiGateway.ViewModel.UserRole;
@@ -7,7 +7,7 @@ namespace SHCApiGateway.Maps
 {
     public static class UserMap
     {
-        public static WebApplication InitialiseRegisterMap(WebApplication app)
+        public static WebApplication InitialiseMap(WebApplication app)
         {
             var registerMap = app.MapGroup("/user");
 
@@ -17,14 +17,14 @@ namespace SHCApiGateway.Maps
             return app;
         }
 
-        private static async Task<IResult> CreateUser(IUserServices registerServices, UserViewModel user)
+        private static async Task<IResult> CreateUser(IUserServices userServices, UserViewModel user)
         {
             if (user == null)
             {
                 return TypedResults.BadRequest(string.Empty);
             }
 
-            string result = await registerServices.CreateUser(user);
+            string result = await userServices.CreateUser(user);
 
             if (result != "true")
             {
@@ -34,16 +34,16 @@ namespace SHCApiGateway.Maps
             return TypedResults.Ok(result);
         }
 
-        private static async Task<IResult> CreateRole(IUserServices registerServices, RoleViewModel role)
+        private static async Task<IResult> CreateRole(IUserServices userServices, RoleModel role)
         {
-            if(role == null)
+            if (role == null)
             {
                 return TypedResults.BadRequest(string.Empty);
             }
 
-            string result = await registerServices.CreateRole(role);
+            string result = await userServices.CreateRole(role);
 
-            if(result != "true")
+            if (result != "true")
             {
                 return TypedResults.BadRequest(result);
             }

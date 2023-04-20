@@ -2,8 +2,8 @@
 {
     public class UserLoginModel
     {
-        public string UserName { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public bool IsRemember { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public bool IsRemember { get; set; } = false;
     }
 }

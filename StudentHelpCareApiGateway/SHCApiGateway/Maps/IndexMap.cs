@@ -2,7 +2,7 @@
 {
     public static class IndexMap
     {
-        public static WebApplication InitialiseIndexMap(WebApplication app)
+        public static WebApplication InitialiseMap(WebApplication app)
         {
             app.MapGet("/", () => Get());
 

@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using SHCApiGateway.Data.Entity;
 using SHCApiGateway.Library;
 using SHCApiGateway.Services.Iservices;
 using StudentHelpCare.Identity.Data.Model;
-using System.Security.Claims;
 
 namespace SHCApiGateway.Services.Services
 {
@@ -29,12 +27,15 @@ namespace SHCApiGateway.Services.Services
 
             try
             {
+                if (userLogin == null || string.IsNullOrEmpty(userLogin.UserName) 
+                    || string.IsNullOrEmpty(userLogin.Password)) return success;
+
                 var result = await _singInManager.PasswordSignInAsync(userLogin.UserName,
                            userLogin.Password, userLogin.IsRemember, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
-                    User user = await _userManager.FindByNameAsync(userLogin.UserName);
+                    User? user = await _userManager.FindByNameAsync(userLogin.UserName);
 
                     if (user != null)
                     {

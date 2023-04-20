@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using SHCApiGateway.Data.Entity;
+using SHCApiGateway.Data.Model;
 using SHCApiGateway.Services.Iservices;
 using SHCApiGateway.ViewModel.User;
-using SHCApiGateway.ViewModel.UserRole;
-using System.Runtime.InteropServices.JavaScript;
 
 namespace SHCApiGateway.Services.Services
 {
@@ -31,7 +30,8 @@ namespace SHCApiGateway.Services.Services
 
             try
             {
-                if (user != null)
+                if (user != null && !string.IsNullOrEmpty(user.UserName) 
+                    && !string.IsNullOrEmpty(user.Password))
                 {
                     var userData = new User
                     {
@@ -67,7 +67,7 @@ namespace SHCApiGateway.Services.Services
             return isSuccess;
         }
 
-        public async Task<string> CreateRole(RoleViewModel role)
+        public async Task<string> CreateRole(RoleModel role)
         {
             string isSuccess = "false";
 
@@ -99,7 +99,7 @@ namespace SHCApiGateway.Services.Services
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Role error:", ex);
             }

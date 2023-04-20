@@ -8,10 +8,13 @@ namespace StudentHelpCare.StudentHelpCareIdentityServer.AppSetting
         public static WebApplication RegisterMap(this WebApplication app)
         {
             //initialise index map
-            IndexMap.InitialiseIndexMap(app);
+            IndexMap.InitialiseMap(app);
 
             //initialise register map
-            UserMap.InitialiseRegisterMap(app);
+            UserMap.InitialiseMap(app);
+
+            //initialise register map
+            UserAuthenticationMap.InitialiseMap(app);
 
             return app;
         }
