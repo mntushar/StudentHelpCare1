@@ -41,6 +41,8 @@ namespace SHCApiGateway.Services.Services
 
                     if (user != null)
                     {
+                        success.Success = true;
+
                         IList<string> roleList = await _userManager.GetRolesAsync(user);
                         IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
 

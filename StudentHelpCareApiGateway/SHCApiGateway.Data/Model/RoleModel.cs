@@ -2,7 +2,7 @@
 {
     public class RoleModel
     {
+        public string RoleType { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public string NormalizedName { get; set; } = string.Empty;
     }
 }

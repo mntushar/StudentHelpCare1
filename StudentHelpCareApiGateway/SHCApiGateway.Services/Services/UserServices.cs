@@ -81,8 +81,8 @@ namespace SHCApiGateway.Services.Services
 
                 var roleData = new Role()
                 {
+                    RoleType = role.RoleType,
                     Name = role.Name,
-                    NormalizedName = role.NormalizedName,
                     ConcurrencyStamp = Guid.NewGuid().ToString()
                 };
 
