@@ -62,7 +62,7 @@ namespace SHCApiGateway.Library
                 {
                     var clims = new[]
                     {
-                    new Claim("claim-type", user.Id),
+                    new Claim("Id", user.Id),
                     new Claim("name", user.UserName!),
                     new Claim("email", user.Email!),
                     new Claim("role", role),
@@ -70,9 +70,9 @@ namespace SHCApiGateway.Library
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                    token = GenerateJWTSymmetricToken(clims, ApiGatewayInformation.jwtSymmetricTokenKry,
-                                 DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
-                                 ApiGatewayInformation.url);
+                token = GenerateJWTSymmetricToken(clims, ApiGatewayInformation.JwtSymmetricTokenKey(),
+                                DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
+                                ApiGatewayInformation.url);
                 }
             }
             catch(Exception ex)

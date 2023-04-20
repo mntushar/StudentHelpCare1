@@ -11,8 +11,8 @@ namespace SHCApiGateway.Repository.DbContext
             Id = "72f14134-1611-499f-a58f-a5c4299b8b15",
             UserName = "Admin",
             Email = "admin@gmail.com",
-            NormalizedUserName = "Admin".ToUpper(),
-            NormalizedEmail = "admin@gmail.com".ToUpper(),
+            NormalizedUserName = "ADMIN",
+            NormalizedEmail = "ADMIN@GMAIL.COM",
             //passwotd 123
             PasswordHash = "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==",
             EmailConfirmed = false,
@@ -26,7 +26,7 @@ namespace SHCApiGateway.Repository.DbContext
             Id = "4b65e0d2-5c89-41e1-8505-fe956483e735",
             RoleType = "AdminRole",
             Name = "admin",
-            NormalizedName = "admin".ToUpper(),
+            NormalizedName = "ADMIN",
             ConcurrencyStamp = "233e96aa-a060-43d5-b306-5a6309f88395"
         };
 
@@ -43,7 +43,7 @@ namespace SHCApiGateway.Repository.DbContext
             {
                 Id = 1,
                 UserId = "72f14134-1611-499f-a58f-a5c4299b8b15",
-                ClaimType = "Rred",
+                ClaimType = "Read",
                 ClaimValue = "true"
 
             },
