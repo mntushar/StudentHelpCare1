@@ -1,12 +1,11 @@
 ﻿using SHCApiGateway.Data.Model;
 using SHCApiGateway.ViewModel.User;
-using SHCApiGateway.ViewModel.UserRole;
 
 namespace SHCApiGateway.Services.Iservices
 {
     public interface IUserServices
     {
-        Task<string> CreateUser(UserViewModel user);
-        Task<string> CreateRole(RoleModel role);
+        Task<SuccessResult> CreateUser(UserViewModel user);
+        Task<SuccessResult> CreateRole(RoleModel role);
     }
 }

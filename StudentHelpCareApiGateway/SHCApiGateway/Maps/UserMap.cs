@@ -24,14 +24,7 @@ namespace SHCApiGateway.Maps
                 return TypedResults.BadRequest(string.Empty);
             }
 
-            string result = await userServices.CreateUser(user);
-
-            if (result != "true")
-            {
-                return TypedResults.BadRequest(result);
-            }
-
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(await userServices.CreateUser(user));
         }
 
         private static async Task<IResult> CreateRole(IUserServices userServices, RoleModel role)
@@ -41,14 +34,7 @@ namespace SHCApiGateway.Maps
                 return TypedResults.BadRequest(string.Empty);
             }
 
-            string result = await userServices.CreateRole(role);
-
-            if (result != "true")
-            {
-                return TypedResults.BadRequest(result);
-            }
-
-            return TypedResults.Ok(result);
+            return TypedResults.Ok(await userServices.CreateRole(role));
         }
     }
 }

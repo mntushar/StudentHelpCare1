@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using SHCApiGateway.Data.Entity;
+using SHCApiGateway.Data.Model;
 using SHCApiGateway.Library;
 using SHCApiGateway.Services.Iservices;
 using StudentHelpCare.Identity.Data.Model;
@@ -21,9 +23,9 @@ namespace SHCApiGateway.Services.Services
             _logger = logger;
         }
 
-        public async Task<string> UserLogin(UserLoginModel userLogin)
+        public async Task<AuthenticationResult> UserLogin(UserLoginModel userLogin)
         {
-            string success = string.Empty;
+            AuthenticationResult success = new AuthenticationResult();
 
             try
             {
@@ -43,12 +45,14 @@ namespace SHCApiGateway.Services.Services
                         IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
 
                         //Generate Symmetric Jwt Token
-                        success = Token.GenerateDefaultSymmetricJwtToken(user, roleList, ClaimTypes);
+                        success.Token = Token.GenerateDefaultSymmetricJwtToken(user, roleList, ClaimTypes);
+
+                        success.RefreshToken = string.Empty;
                     }
                 }
                 else
                 {
-                    success = "Please enter valid userName or password...";
+                    success.Message = "Please enter valid userName or password...";
                 }
             }
             catch (Exception ex)

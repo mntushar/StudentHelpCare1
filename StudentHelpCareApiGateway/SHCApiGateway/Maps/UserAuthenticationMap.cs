@@ -20,15 +20,8 @@ namespace SHCApiGateway.Maps
             {
                 return TypedResults.BadRequest(string.Empty);
             }
-
-            string result = await userAuthentication.UserLogin(user);
-
-            if (result != "true")
-            {
-                return TypedResults.BadRequest(result);
-            }
-
-            return TypedResults.Ok(result);
+            
+            return TypedResults.Ok(await userAuthentication.UserLogin(user));
         }
     }
 }

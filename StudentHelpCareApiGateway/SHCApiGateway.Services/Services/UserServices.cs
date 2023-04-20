@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using SHCApiGateway.Data.Entity;
 using SHCApiGateway.Data.Model;
 using SHCApiGateway.Services.Iservices;
@@ -24,9 +25,9 @@ namespace SHCApiGateway.Services.Services
         }
 
 
-        public async Task<string> CreateUser(UserViewModel user)
+        public async Task<SuccessResult> CreateUser(UserViewModel user)
         {
-            string isSuccess = "false";
+            SuccessResult success = new SuccessResult();
 
             try
             {
@@ -48,13 +49,13 @@ namespace SHCApiGateway.Services.Services
 
                     if (result.Succeeded)
                     {
-                        isSuccess = "true";
+                        success.Success = true;
                     }
                     else
                     {
                         if (result.Errors.Any())
                         {
-                            isSuccess = string.Join(" ", result.Errors.Select(x => x.Description));
+                            success.Message = string.Join(" ", result.Errors.Select(x => x.Description));
                         }
                     }
                 }
@@ -64,18 +65,18 @@ namespace SHCApiGateway.Services.Services
                 _logger.LogError(ex, "Login error:", ex);
             }
 
-            return isSuccess;
+            return success;
         }
 
-        public async Task<string> CreateRole(RoleModel role)
+        public async Task<SuccessResult> CreateRole(RoleModel role)
         {
-            string isSuccess = "false";
+            SuccessResult success = new SuccessResult();
 
             try
             {
                 if (role == null)
                 {
-                    return isSuccess;
+                    return success;
                 }
 
                 var roleData = new Role()
@@ -89,13 +90,13 @@ namespace SHCApiGateway.Services.Services
 
                 if (result.Succeeded)
                 {
-                    isSuccess = "true";
+                    success.Success = true;
                 }
                 else
                 {
                     if (result.Errors.Any())
                     {
-                        isSuccess = string.Join(" ", result.Errors.Select(e => e.Description));
+                        success.Message = string.Join(" ", result.Errors.Select(e => e.Description));
                     }
                 }
             }
@@ -104,7 +105,7 @@ namespace SHCApiGateway.Services.Services
                 _logger.LogError(ex, "Role error:", ex);
             }
 
-            return isSuccess;
+            return success;
         }
     }
 }
