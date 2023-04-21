@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Cryptography;
+using System.Text;
 
 namespace SHCApiGateway.Library
 {
@@ -9,10 +10,22 @@ namespace SHCApiGateway.Library
 
         public static string JwtSymmetricTokenKey()
         {
-            byte[] byteArray = Encoding.UTF8.GetBytes(_jwtSymmetricTokenKry);
-            string binaryString = Convert.ToString(BitConverter.ToInt64(byteArray, 0), 2).PadLeft(128, '0');
+            string key = string.Empty;
 
-            return binaryString;
+            byte[]? byteArray = Encoding.UTF8.GetBytes(_jwtSymmetricTokenKry);
+
+            if (byteArray == null) return key;
+
+            using (var hmac = new HMACSHA256(byteArray))
+            {
+                byte[] byteKey = hmac.ComputeHash(Encoding.UTF8.GetBytes(_jwtSymmetricTokenKry));
+                byte[] truncatedKey = new byte[16];
+                Array.Copy(byteKey, truncatedKey, 16);
+
+                key = Convert.ToBase64String(truncatedKey);
+            }
+
+            return key;
         }
     }
 }
