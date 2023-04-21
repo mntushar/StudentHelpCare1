@@ -8,12 +8,8 @@ using System.Text;
 
 namespace SHCApiGateway.Library
 {
-    public static class Token
+    public static class Cryptography
     {
-        private static readonly ILogger _Logger =
-        LoggerFactory.Create(builder =>
-            builder.AddConsole())
-            .CreateLogger(typeof(Token));
         private static readonly RSAParameters _rsakeyParams = new RSAParameters
         {
             Modulus = Encoding.ASCII.GetBytes("my-custom-key-modulus"),
@@ -127,7 +123,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                _Logger.LogError(ex, "Token Error", ex);
+                Console.WriteLine(ex.Message);
             }
 
             return tokenString;
@@ -158,7 +154,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                _Logger.LogError(ex, "Token Error", ex);
+                Console.WriteLine(ex.Message);
             }
 
             return tokenString;
@@ -193,7 +189,7 @@ namespace SHCApiGateway.Library
             }
             catch(Exception ex)
             {
-                _Logger.LogError(ex, "Token Error", ex);
+                Console.WriteLine(ex.Message);
             }
 
             return token;
