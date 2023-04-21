@@ -15,7 +15,7 @@ namespace SHCApiGateway.Repository.DbContext
             NormalizedEmail = "ADMIN@GMAIL.COM",
             //passwotd 123
             PasswordHash = "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==",
-            EmailConfirmed = false,
+            EmailConfirmed = true,
             LockoutEnabled = false,
             PhoneNumberConfirmed = false,
             SecurityStamp = "TCWKAWXAIBHYIIH2RDDGUH3HWJSATRLC"
