@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using SHCApiGateway.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,14 +11,18 @@ namespace SHCApiGateway.Library
     {
         private static readonly RSAParameters _rsakeyParams = new RSAParameters
         {
-            Modulus = Encoding.ASCII.GetBytes("my-custom-key-modulus"),
-            Exponent = Encoding.ASCII.GetBytes("my-custom-key-exponent"),
-            D = Encoding.ASCII.GetBytes("my-custom-key-d"),
-            DP = Encoding.ASCII.GetBytes("my-custom-key-dp"),
-            DQ = Encoding.ASCII.GetBytes("my-custom-key-dq"),
-            InverseQ = Encoding.ASCII.GetBytes("my-custom-key-inverseq"),
-            P = Encoding.ASCII.GetBytes("my-custom-key-p"),
-            Q = Encoding.ASCII.GetBytes("my-custom-key-q")
+            Modulus = Convert.FromBase64String(
+                "WDEikZ7zB1anY42i7DQjbJMNyE9XnsaO+ACaFJ61TjT4g7EN+ypYdOpPqH4GGz4f/vxDXlKItU6Hq3x+GSlgQ=="),
+            Exponent = Convert.FromBase64String(
+                "WDEikZ7zB1anY42i7DQjbJMNyE9XnsaO+ACaFJ61TjT4g7EN+ypYdOpPqH4GGz4f/vxDXlKItU6Hq3x+GSlgQ=="),
+            D = Convert.FromBase64String("WDEikZ7zB1anY42i7DQjbJMNyE9XnsaO+ACaFJ61TjT4g7EN+ypYdOpPqH4GGz4f/vxDXlKItU6Hq3x+GSlgQ=="),
+            DP = Convert.FromBase64String("R+zsNOOK9+lpg44cJF5+wv2xWxK5Z5J5nzb+1AaH8W5uGcvoSPy9Vx8WlLh7tBLwEYikZUCzjKQ2fJUKVQGLQ=="),
+            DQ = Convert.FromBase64String("AnoywYdZDXs+Gn4J3qjrK6hJUfE1X0rC/f6q+UoJhN0zJ/kNV8fdSTb+AKvpgj1iJ12Hzh+8aQF5mLz5mGh5w=="),
+            InverseQ = Convert.FromBase64String(
+                "Zaxw0fd80bhsdNfM/sF+xS9yjVi94BWyf3TtTqskt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sA=="),
+            P = Convert.FromBase64String("3GTR1dmyZ1gKjw4oMIP+kWpwR8rXl/lr27ODbrrFG2YjKm8xalZBc94Zw3qitOce"),
+            Q = Convert.FromBase64String("y0fjKk99CXc7V2Z0Mue5dVmqNGSTXYu8y7Gg+lz13u0=")
+
         };
         private static readonly int _rsaKeySize = 2048;
         private static readonly string _SymmetricSecretKry = "test1test";
@@ -51,9 +54,9 @@ namespace SHCApiGateway.Library
             return key;
         }
 
-        public static RSAParameters? AsymmetricPrivateKey()
+        public static RSAParameters RsaAsymmetricPrivateKey()
         {
-            RSAParameters? privateKey = null;
+            RSAParameters privateKey = new RSAParameters();
 
             try
             {
@@ -61,21 +64,21 @@ namespace SHCApiGateway.Library
                 {
                     rsa.ImportParameters(_rsakeyParams);
 
-                    // Get the public and private keys
+                    // Get the private keys
                     privateKey = rsa.ExportParameters(true);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
 
             return privateKey;
         }
 
-        public static RSAParameters? AsymmetricPublicKey()
+        public static RSAParameters RsaAsymmetricPublicKey()
         {
-            RSAParameters? publicKey = null;
+            RSAParameters publicKey = new RSAParameters();
 
             try
             {
@@ -83,13 +86,13 @@ namespace SHCApiGateway.Library
                 {
                     rsa.ImportParameters(_rsakeyParams);
 
-                    // Get the public and private keys
-                    publicKey = rsa.ExportParameters(false);
+                    // Get the public keys
+                    publicKey = rsa.ExportParameters(true);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
 
             return publicKey;
@@ -123,7 +126,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
 
             return tokenString;
@@ -154,7 +157,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
 
             return tokenString;
@@ -182,14 +185,49 @@ namespace SHCApiGateway.Library
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                token = GenerateJWTSymmetricToken(clims, SymmetricKey(),
-                                DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
-                                ApiGatewayInformation.url);
+                    token = GenerateJWTSymmetricToken(clims, SymmetricKey(),
+                                    DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
+                                    ApiGatewayInformation.url);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
+            }
+
+            return token;
+        }
+
+        public static string OpenIdJwtToken(User user, IList<string> roleList,
+            IList<System.Security.Claims.Claim> ClaimTypes)
+        {
+            string token = string.Empty;
+
+            try
+            {
+                string role = string.Join(",", roleList.Select(r => r.ToString()));
+                string claim = string.Join(",", ClaimTypes.Select(c => c.ToString()));
+
+                if (user != null)
+                {
+                    var clims = new[]
+                    {
+                    new Claim("Id", user.Id),
+                    new Claim("name", user.UserName!),
+                    new Claim("email", user.Email!),
+                    new Claim("role", role),
+                    new Claim("claimTypes", claim),
+                    new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
+                };
+
+                    token = GenerateJWTAsymmetricToken(clims, RsaAsymmetricPrivateKey(), RsaAsymmetricPublicKey(),
+                                    DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
+                                    ApiGatewayInformation.url);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
             }
 
             return token;
