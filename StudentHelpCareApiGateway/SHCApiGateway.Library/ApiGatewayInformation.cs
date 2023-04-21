@@ -18,7 +18,7 @@ namespace SHCApiGateway.Library
 
             using (var hmac = new HMACSHA256(byteArray))
             {
-                byte[] byteKey = hmac.ComputeHash(Encoding.UTF8.GetBytes(_jwtSymmetricTokenKry));
+                byte[] byteKey = hmac.ComputeHash(byteArray);
                 byte[] truncatedKey = new byte[16];
                 Array.Copy(byteKey, truncatedKey, 16);
 
