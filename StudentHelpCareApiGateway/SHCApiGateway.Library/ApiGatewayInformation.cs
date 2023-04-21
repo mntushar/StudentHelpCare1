@@ -12,17 +12,24 @@ namespace SHCApiGateway.Library
         {
             string key = string.Empty;
 
-            byte[]? byteArray = Encoding.UTF8.GetBytes(_jwtSymmetricTokenKry);
-
-            if (byteArray == null) return key;
-
-            using (var hmac = new HMACSHA256(byteArray))
+            try
             {
-                byte[] byteKey = hmac.ComputeHash(byteArray);
-                byte[] truncatedKey = new byte[16];
-                Array.Copy(byteKey, truncatedKey, 16);
+                byte[]? byteArray = Encoding.UTF8.GetBytes(_jwtSymmetricTokenKry);
 
-                key = Convert.ToBase64String(truncatedKey);
+                if (byteArray == null) return key;
+
+                using (var hmac = new HMACSHA256(byteArray))
+                {
+                    byte[] byteKey = hmac.ComputeHash(byteArray);
+                    byte[] truncatedKey = new byte[16];
+                    Array.Copy(byteKey, truncatedKey, 16);
+
+                    key = Convert.ToBase64String(truncatedKey);
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
             }
 
             return key;
