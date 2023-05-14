@@ -9,23 +9,23 @@ namespace SHCApiGateway.Library
 {
     public static class Cryptography
     {
-        private static readonly RSAParameters _rsakeyParams = new RSAParameters
-        {
-            Modulus = Convert.FromBase64String(
-                "WDEikZ7zB1anY42i7DQjbJMNyE9XnsaO+ACaFJ61TjT4g7EN+ypYdOpPqH4GGz4f/vxDXlKItU6Hq3x+GSlgQ=="),
-            Exponent = Convert.FromBase64String(
-                "WDEikZ7zB1anY42i7DQjbJMNyE9XnsaO+ACaFJ61TjT4g7EN+ypYdOpPqH4GGz4f/vxDXlKItU6Hq3x+GSlgQ=="),
-            D = Convert.FromBase64String("WDEikZ7zB1anY42i7DQjbJMNyE9XnsaO+ACaFJ61TjT4g7EN+ypYdOpPqH4GGz4f/vxDXlKItU6Hq3x+GSlgQ=="),
-            DP = Convert.FromBase64String("R+zsNOOK9+lpg44cJF5+wv2xWxK5Z5J5nzb+1AaH8W5uGcvoSPy9Vx8WlLh7tBLwEYikZUCzjKQ2fJUKVQGLQ=="),
-            DQ = Convert.FromBase64String("AnoywYdZDXs+Gn4J3qjrK6hJUfE1X0rC/f6q+UoJhN0zJ/kNV8fdSTb+AKvpgj1iJ12Hzh+8aQF5mLz5mGh5w=="),
-            InverseQ = Convert.FromBase64String(
-                "Zaxw0fd80bhsdNfM/sF+xS9yjVi94BWyf3TtTqskt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sZt4sA=="),
-            P = Convert.FromBase64String("3GTR1dmyZ1gKjw4oMIP+kWpwR8rXl/lr27ODbrrFG2YjKm8xalZBc94Zw3qitOce"),
-            Q = Convert.FromBase64String("y0fjKk99CXc7V2Z0Mue5dVmqNGSTXYu8y7Gg+lz13u0=")
-
-        };
         private static readonly int _rsaKeySize = 2048;
         private static readonly string _SymmetricSecretKry = "test1test";
+        private static readonly string _privateKeyFilename = "private_key.txt";
+        private static readonly string _publicKeyFilename = "public_key.txt";
+
+        public static string AsymmtricKeyPath
+        {
+            get
+            {
+                string path = Directory.GetCurrentDirectory();
+                int lastIndex = path.LastIndexOf("\\");
+                path = path.Remove(lastIndex + 1);
+                path = path + "SHCApiGateway.Library\\Files";
+
+                return path;
+            }
+        }
 
         public static string SymmetricKey()
         {
@@ -60,12 +60,27 @@ namespace SHCApiGateway.Library
 
             try
             {
-                using (RSA rsa = RSA.Create(_rsaKeySize))
+                if (!File.Exists(AsymmtricKeyPath + "\\" + _privateKeyFilename))
                 {
-                    rsa.ImportParameters(_rsakeyParams);
+                    CreateAsymmetricKey();
+                }
 
-                    // Get the private keys
-                    privateKey = rsa.ExportParameters(true);
+                if (!File.Exists(AsymmtricKeyPath + "\\" + _privateKeyFilename))
+                {
+                    CreateAsymmetricKey();
+                }
+
+                string getPublicKey = File.ReadAllText(AsymmtricKeyPath + "\\" + _privateKeyFilename);
+
+                if (string.IsNullOrEmpty(getPublicKey))
+                {
+                    return privateKey;
+                }
+
+                using (var rsa = new RSACryptoServiceProvider())
+                {
+                    rsa.FromXmlString(getPublicKey);
+                    privateKey = rsa.ExportParameters(false);
                 }
             }
             catch (Exception ex)
@@ -82,12 +97,27 @@ namespace SHCApiGateway.Library
 
             try
             {
-                using (RSA rsa = RSA.Create(_rsaKeySize))
+                if (!File.Exists(AsymmtricKeyPath + "\\" + _publicKeyFilename))
                 {
-                    rsa.ImportParameters(_rsakeyParams);
+                    CreateAsymmetricKey();
+                }
 
-                    // Get the public keys
-                    publicKey = rsa.ExportParameters(true);
+                if (!File.Exists(AsymmtricKeyPath + "\\" + _publicKeyFilename))
+                {
+                    CreateAsymmetricKey();
+                }
+
+                string getPublicKey = File.ReadAllText(AsymmtricKeyPath + "\\" + _publicKeyFilename);
+
+                if (string.IsNullOrEmpty(getPublicKey))
+                {
+                    return publicKey;
+                }
+
+                using (var rsa = new RSACryptoServiceProvider())
+                {
+                    rsa.FromXmlString(getPublicKey);
+                    publicKey = rsa.ExportParameters(false);
                 }
             }
             catch (Exception ex)
@@ -96,6 +126,44 @@ namespace SHCApiGateway.Library
             }
 
             return publicKey;
+        }
+
+        private static void CreateAsymmetricKey()
+        {
+            try
+            {
+                if (!Directory.Exists(AsymmtricKeyPath))
+                {
+                    Directory.CreateDirectory(AsymmtricKeyPath);
+                }
+
+                if (File.Exists(AsymmtricKeyPath + "\\" + _privateKeyFilename))
+                {
+                    File.Delete(AsymmtricKeyPath + "\\" + _privateKeyFilename);
+                }
+
+                if (File.Exists(AsymmtricKeyPath + "\\" + _publicKeyFilename))
+                {
+                    File.Delete(AsymmtricKeyPath + "\\" + _publicKeyFilename);
+                }
+
+                using (var rsa = new RSACryptoServiceProvider())
+                {
+                    // Generate a new 2048-bit RSA key pair.
+                    rsa.KeySize = _rsaKeySize;
+
+                    // Export the private key as a string.
+                    File.WriteAllText(AsymmtricKeyPath + "\\" + _privateKeyFilename, rsa.ToXmlString(true));
+
+                    // Export the public key as a string.
+                    File.WriteAllText(AsymmtricKeyPath + "\\" + _publicKeyFilename, rsa.ToXmlString(false));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
         }
 
         public static string GenerateJWTSymmetricToken(Claim[] claims,
@@ -202,7 +270,6 @@ namespace SHCApiGateway.Library
             IList<System.Security.Claims.Claim> ClaimTypes)
         {
             string token = string.Empty;
-
             try
             {
                 string role = string.Join(",", roleList.Select(r => r.ToString()));
