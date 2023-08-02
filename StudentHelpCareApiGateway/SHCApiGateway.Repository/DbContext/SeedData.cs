@@ -10,8 +10,8 @@ namespace SHCApiGateway.Repository.DbContext
         {
             Id = "72f14134-1611-499f-a58f-a5c4299b8b15",
             UserName = "Admin",
+            NormalizedUserName = "Admin",
             Email = "admin@gmail.com",
-            NormalizedUserName = "ADMIN",
             NormalizedEmail = "ADMIN@GMAIL.COM",
             //passwotd 123
             PasswordHash = "AQAAAAIAAYagAAAAEFbMg/4ElLBGlexTVfyy/DlBIOFib3JoT+ZQIzn/LHwgsZAkGJwqP+6c6uXu5jr1ZQ==",

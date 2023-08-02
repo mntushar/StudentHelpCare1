@@ -42,7 +42,8 @@ namespace SHCApiGateway.Services.Services
                         PhoneNumberConfirmed = false,
                         TwoFactorEnabled = false,
                         LockoutEnabled = false,
-                        AccessFailedCount = 0
+                        AccessFailedCount = 0,
+                        NormalizedUserName = user.UserName
                     };
 
                     var result = await _userManager.CreateAsync(userData, user.Password);
