@@ -39,18 +39,20 @@ namespace SHCApiGateway.Services.Services
                 {
                     User? user = await _userManager.FindByNameAsync(userLogin.UserName);
 
-                    if (user != null)
+                    if (user == null)
                     {
-                        success.Success = true;
-
-                        IList<string> roleList = await _userManager.GetRolesAsync(user);
-                        IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
-
-                        //Generate Symmetric Jwt Token
-                        success.Token = Cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
-
-                        success.RefreshToken = string.Empty;
+                        return success;
                     }
+
+                    success.Success = true;
+
+                    IList<string> roleList = await _userManager.GetRolesAsync(user);
+                    IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
+
+                    //Generate Symmetric Jwt Token
+                    success.Token = Cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
+
+                    success.RefreshToken = string.Empty;
                 }
                 else
                 {
