@@ -1,8 +1,10 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SHCApiGateway.Data.Entity;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace SHCApiGateway.Library
@@ -10,21 +12,8 @@ namespace SHCApiGateway.Library
     public static class Cryptography
     {
         private static readonly int _rsaKeySize = 2048;
-        private static readonly string _SymmetricSecretKry = "test1test";
+        private static readonly string _SymmetricSecretKry = ApiGatewayInformation.TokenSymmetricSecretKry;
 
-
-        public static string AsymmtricKeyPath
-        {
-            get
-            {
-                string path = Directory.GetCurrentDirectory();
-                int lastIndex = path.LastIndexOf("\\");
-                path = path.Remove(lastIndex + 1);
-                path = path + "SHCApiGateway.Library\\Files";
-
-                return path;
-            }
-        }
 
         public static string SymmetricKey()
         {
@@ -87,17 +76,19 @@ namespace SHCApiGateway.Library
             return tokenString;
         }
 
-        public static string GenerateJWTAsymmetricToken(Claim[] claims,
+        public static string GenerateJWTAsymmetricToken(Claim[] claims, X509Certificate2? certification,
            DateTime tokenValidationTime, string algorithom, string issuer, string audience)
         {
             string tokenString = string.Empty;
 
+            //if (certification == null)
+            //    return tokenString;
+
             try
             {
+                var certificate = new X509Certificate2(@"C:\\test.cer");
                 // Create signing credentials using the key
-                using var rsa = new RSACryptoServiceProvider(_rsaKeySize);
-                RSAParameters keyParams = rsa.ExportParameters(true);
-                var signingCredentials = new SigningCredentials(new RsaSecurityKey(keyParams), SecurityAlgorithms.RsaSha256);
+                var signingCredentials = new SigningCredentials(new X509SecurityKey(certificate), SecurityAlgorithms.RsaSha256);
 
                 // Define the token's options
                 var tokenOptions = new JwtSecurityToken(
@@ -175,7 +166,7 @@ namespace SHCApiGateway.Library
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                    token = GenerateJWTAsymmetricToken(clims, DateTime.Now.AddDays(1), 
+                    token = GenerateJWTAsymmetricToken(clims, X509Certificates.GetCertificite(), DateTime.Now.AddDays(1), 
                         SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url, 
                         ApiGatewayInformation.url);
                 }
