@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SHCApiGateway.Data\SHCApiGateway.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Certifications\" />
+  </ItemGroup>
+
 </Project>
