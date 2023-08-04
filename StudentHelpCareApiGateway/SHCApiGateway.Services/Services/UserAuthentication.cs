@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using SHCApiGateway.Data.Entity;
 using SHCApiGateway.Data.Model;
 using SHCApiGateway.Library;
@@ -29,7 +28,7 @@ namespace SHCApiGateway.Services.Services
 
             try
             {
-                if (userLogin == null || string.IsNullOrEmpty(userLogin.UserName) 
+                if (userLogin == null || string.IsNullOrEmpty(userLogin.UserName)
                     || string.IsNullOrEmpty(userLogin.Password)) return success;
 
                 var result = await _singInManager.PasswordSignInAsync(userLogin.UserName,
