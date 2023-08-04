@@ -77,20 +77,23 @@ namespace SHCApiGateway.Library
         }
 
         public static string GenerateJWTAsymmetricToken(Claim[] claims,
-           DateTime tokenValidationTime, string algorithom, string issuer, string audience)
+           DateTime tokenValidationTime, string issuer, string audience)
         {
             string tokenString = string.Empty;
 
             try
             {
-                if (!File.Exists(ApiGatewayInformation.JwtCertification))
+                if (!File.Exists(ApiGatewayInformation.AsyJwtCertification))
                 {
                     return tokenString;
                 }
 
                 // Create signing credentials using the key
-                var certificate = new X509Certificate2(ApiGatewayInformation.JwtCertification);
-                var signingCredentials = new SigningCredentials(new X509SecurityKey(certificate), SecurityAlgorithms.RsaSha256);
+                var certificate = new X509Certificate2(ApiGatewayInformation.AsyJwtCertification, 
+                    ApiGatewayInformation.AsyJwtPrivateKeyDecryptPassword);
+
+                var signingCredentials = new SigningCredentials(new X509SecurityKey(certificate), 
+                    SecurityAlgorithms.RsaSha256);
 
                 // Define the token's options
                 var tokenOptions = new JwtSecurityToken(
@@ -169,7 +172,7 @@ namespace SHCApiGateway.Library
                 };
 
                     token = GenerateJWTAsymmetricToken(clims, DateTime.Now.AddDays(1), 
-                        SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url, 
+                        ApiGatewayInformation.url, 
                         ApiGatewayInformation.url);
                 }
             }

@@ -44,15 +44,18 @@ namespace SHCApiGateway.Services.Services
                         return success;
                     }
 
-                    success.Success = true;
-
                     IList<string> roleList = await _userManager.GetRolesAsync(user);
                     IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
 
                     //Generate Symmetric Jwt Token
                     success.Token = Cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
 
-                    success.RefreshToken = string.Empty;
+                    success.RefreshToken = "test";
+
+                    if (!string.IsNullOrEmpty(success.Token) && !string.IsNullOrEmpty(success.RefreshToken))
+                        success.Success = true;
+                    else
+                        success = new AuthenticationResult();
                 }
                 else
                 {
