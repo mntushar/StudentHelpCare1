@@ -1,9 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SHCApiGateway.Data.Entity;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -11,37 +9,6 @@ namespace SHCApiGateway.Library
 {
     public static class Cryptography
     {
-        private static readonly int _rsaKeySize = 2048;
-        private static readonly string _SymmetricSecretKry = ApiGatewayInformation.TokenSymmetricSecretKry;
-
-
-        public static string SymmetricKey()
-        {
-            string key = string.Empty;
-
-            try
-            {
-                byte[]? byteArray = Encoding.UTF8.GetBytes(_SymmetricSecretKry);
-
-                if (byteArray == null) return key;
-
-                using (var hmac = new HMACSHA256(byteArray))
-                {
-                    byte[] byteKey = hmac.ComputeHash(byteArray);
-                    byte[] truncatedKey = new byte[16];
-                    Array.Copy(byteKey, truncatedKey, 16);
-
-                    key = Convert.ToBase64String(truncatedKey);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return key;
-        }
-
         public static string GenerateJWTSymmetricToken(Claim[] claims,
             string secretKey, DateTime tokenValidationTime,
             string algorithom, string issuer, string audience)
@@ -89,10 +56,10 @@ namespace SHCApiGateway.Library
                 }
 
                 // Create signing credentials using the key
-                var certificate = new X509Certificate2(ApiGatewayInformation.AsyJwtCertification, 
+                var certificate = new X509Certificate2(ApiGatewayInformation.AsyJwtCertification,
                     ApiGatewayInformation.AsyJwtPrivateKeyDecryptPassword);
 
-                var signingCredentials = new SigningCredentials(new X509SecurityKey(certificate), 
+                var signingCredentials = new SigningCredentials(new X509SecurityKey(certificate),
                     SecurityAlgorithms.RsaSha256);
 
                 // Define the token's options
@@ -137,9 +104,9 @@ namespace SHCApiGateway.Library
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                    token = GenerateJWTSymmetricToken(clims, SymmetricKey(),
-                                    DateTime.Now.AddDays(1), SecurityAlgorithms.HmacSha256, ApiGatewayInformation.url,
-                                    ApiGatewayInformation.url);
+                    token = GenerateJWTSymmetricToken(clims, ApiGatewayInformation.SymmetricKey,
+                                    ApiGatewayInformation.TokenValideTime, SecurityAlgorithms.HmacSha256,
+                                    ApiGatewayInformation.url, ApiGatewayInformation.url);
                 }
             }
             catch (Exception ex)
@@ -171,8 +138,8 @@ namespace SHCApiGateway.Library
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                    token = GenerateJWTAsymmetricToken(clims, DateTime.Now.AddDays(1), 
-                        ApiGatewayInformation.url, 
+                    token = GenerateJWTAsymmetricToken(clims, DateTime.Now.AddDays(1),
+                        ApiGatewayInformation.url,
                         ApiGatewayInformation.url);
                 }
             }
