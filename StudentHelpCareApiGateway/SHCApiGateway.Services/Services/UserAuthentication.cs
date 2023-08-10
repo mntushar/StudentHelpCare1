@@ -49,8 +49,7 @@ namespace SHCApiGateway.Services.Services
                     //Generate Symmetric Jwt Token
                     success.Token = Cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
 
-                    success.RefreshToken = await _userManager.GenerateUserTokenAsync(user,
-                        "Student Help Care", "Refresh token");
+                    success.RefreshToken = "'test";
 
                     if (!string.IsNullOrEmpty(success.Token) && !string.IsNullOrEmpty(success.RefreshToken))
                         success.Success = true;
@@ -67,7 +66,7 @@ namespace SHCApiGateway.Services.Services
                 _logger.LogError(ex, "Login error:", ex);
             }
             finally 
-            {
+            { 
                 success = new AuthenticationResult();
             }
 

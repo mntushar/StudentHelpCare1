@@ -10,10 +10,11 @@ namespace SHCApiGateway.Library
         public static readonly string url = "https://localhost:5266";
         private static readonly string _tokenSymmetricSecretKry = "test1test";
         public static readonly string AsyJwtPrivateKeyDecryptPassword = "test";
+        public static readonly string DataProtectionDecryptPasswordKey = "test";
         public static readonly DateTime TokenValideTime = DateTime.Now.Date.AddDays(1);
 
 
-        private static string CertificationPath
+        public static string CertificationPath
         {
             get
             {
@@ -94,6 +95,16 @@ namespace SHCApiGateway.Library
                 }
 
                 return key;
+            }
+        }
+
+        public static string DataProtectionCertification
+        {
+            get
+            {
+                string path = $"{CertificationPath}ase.pfx";
+
+                return path;
             }
         }
     }

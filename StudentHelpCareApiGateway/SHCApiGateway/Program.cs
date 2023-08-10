@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SHCApiGateway.Data.Entity;
 using SHCApiGateway.Library;
 using SHCApiGateway.Repository.DbContext;
 using StudentHelpCare.StudentHelpCare.AppSetting;
 using StudentHelpCare.StudentHelpCareIdentityServer.AppSetting;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,19 @@ builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfir
     .AddEntityFrameworkStores<SHCApiGatewayDbContext>();
 builder.Services.AddRazorPages();
 
+//data protection config
+//builder.Services.AddDataProtection()
+//        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+//        {
+//            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+//            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+//        })
+//        .PersistKeysToFileSystem(new DirectoryInfo(ApiGatewayInformation.CertificationPath))
+//        .ProtectKeysWithCertificate(
+//        new X509Certificate2(ApiGatewayInformation.DataProtectionCertification, 
+//        builder.Configuration[ApiGatewayInformation.DataProtectionDecryptPasswordKey]));
+
+//identity config
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.
