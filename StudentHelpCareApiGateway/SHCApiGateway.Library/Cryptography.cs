@@ -37,7 +37,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new ArgumentNullException(ex.Message);
             }
 
             return tokenString;
@@ -76,7 +76,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new ArgumentNullException(ex.Message);
             }
 
             return tokenString;
@@ -111,7 +111,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new ArgumentNullException(ex.Message);
             }
 
             return token;
@@ -145,7 +145,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw new ArgumentNullException(ex.Message);
             }
 
             return token;

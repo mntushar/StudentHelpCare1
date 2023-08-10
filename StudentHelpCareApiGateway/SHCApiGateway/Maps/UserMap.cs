@@ -1,7 +1,6 @@
 ﻿using SHCApiGateway.Data.Model;
 using SHCApiGateway.Services.Iservices;
 using SHCApiGateway.ViewModel.User;
-using SHCApiGateway.ViewModel.UserRole;
 
 namespace SHCApiGateway.Maps
 {
@@ -12,7 +11,7 @@ namespace SHCApiGateway.Maps
             var registerMap = app.MapGroup("/user");
 
             registerMap.MapPost("/registerUser", CreateUser);
-            registerMap.MapPost("/RoleCreate", CreateRole);
+            registerMap.MapPost("/RoleCreate", CreateRole).RequireAuthorization();
 
             return app;
         }
