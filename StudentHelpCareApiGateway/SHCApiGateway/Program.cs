@@ -25,16 +25,7 @@ builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfir
 builder.Services.AddRazorPages();
 
 //data protection config
-//builder.Services.AddDataProtection()
-//        .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
-//        {
-//            EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
-//            ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
-//        })
-//        .PersistKeysToFileSystem(new DirectoryInfo(ApiGatewayInformation.CertificationPath))
-//        .ProtectKeysWithCertificate(
-//        new X509Certificate2(ApiGatewayInformation.DataProtectionCertification, 
-//        builder.Configuration[ApiGatewayInformation.DataProtectionDecryptPasswordKey]));
+builder.Services.AddDataProtection();
 
 //identity config
 builder.Services.Configure<IdentityOptions>(options =>
