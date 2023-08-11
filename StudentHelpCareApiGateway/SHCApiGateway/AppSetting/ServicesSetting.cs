@@ -1,4 +1,5 @@
-﻿using SHCApiGateway.Services.Iservices;
+﻿using SHCApiGateway.Library;
+using SHCApiGateway.Services.Iservices;
 using SHCApiGateway.Services.Services;
 
 namespace StudentHelpCare.StudentHelpCare.AppSetting
@@ -9,6 +10,7 @@ namespace StudentHelpCare.StudentHelpCare.AppSetting
         {
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IUserAuthentication, UserAuthentication>();
+            services.AddTransient< ICryptography, Cryptography>();
 
             return services;
         }

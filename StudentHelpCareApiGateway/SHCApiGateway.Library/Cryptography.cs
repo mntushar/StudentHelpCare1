@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.Owin.Security.DataProtection;
 using SHCApiGateway.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,8 +8,15 @@ using System.Text;
 
 namespace SHCApiGateway.Library
 {
-    public static class Cryptography
+    public class Cryptography : ICryptography
     {
+        private IDataProtector _protector;
+
+        public Cryptography(IDataProtectionProvider dataProtectionProvider)
+        {
+            _protector = dataProtectionProvider.Create("Cryptography protection");
+        }
+
         public static string GenerateJWTSymmetricToken(Claim[] claims,
             string secretKey, DateTime tokenValidationTime,
             string algorithom, string issuer, string audience)
@@ -147,6 +155,52 @@ namespace SHCApiGateway.Library
             {
                 throw new ArgumentNullException(ex.Message);
             }
+
+            return token;
+        }
+
+        public string GenerateToken(string userId, string purpose, string securityStamp, DateTime validityTime)
+        {
+            string token = string.Empty;
+
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(purpose) || string.IsNullOrEmpty(securityStamp))
+                return token;
+
+            //ArgumentNullException.ThrowIfNull();
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (StreamWriter writer = new StreamWriter(memoryStream))
+                {
+                    writer.Write(validityTime);
+                    writer.Write(userId);
+                    writer.Write(purpose);
+                    writer.Write(securityStamp);
+                }
+
+                // The data is now written to the MemoryStream
+
+                // Reset the position to the beginning of the MemoryStream
+                memoryStream.Seek(0, SeekOrigin.Begin);
+
+                var protectedBytes = _protector.Protect(memoryStream.ToArray());
+                token = Convert.ToBase64String(protectedBytes);
+            }
+            //var ms = new MemoryStream();
+            ////var userId = await manager.GetUserIdAsync(user);
+            //using (var writer = ms.CreateWriter())
+            //{
+            //    writer.Write(validityTime);
+            //    writer.Write(userId);
+            //    writer.Write(purpose);
+            //    //string? stamp = null;
+            //    //if (manager.SupportsUserSecurityStamp)
+            //    //{
+            //    //    stamp = await manager.GetSecurityStampAsync(user);
+            //    //}
+            //    writer.Write(securityStamp);
+            //}
+            //var protectedBytes = _protector.Protect(memoryStream.ToArray());
 
             return token;
         }

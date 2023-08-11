@@ -13,13 +13,15 @@ namespace SHCApiGateway.Services.Services
         private UserManager<User> _userManager;
         private ILogger<UserAuthentication> _logger;
         private SignInManager<User> _singInManager;
+        private ICryptography _cryptography;
 
         public UserAuthentication(UserManager<User> userManager, SignInManager<User> singInManger,
-            ILogger<UserAuthentication> logger)
+            ILogger<UserAuthentication> logger, ICryptography cryptography)
         {
             _userManager = userManager;
             _singInManager = singInManger;
             _logger = logger;
+            _cryptography = cryptography;
         }
 
         public async Task<AuthenticationResult> UserLogin(UserLoginModel userLogin)
@@ -49,7 +51,8 @@ namespace SHCApiGateway.Services.Services
                     //Generate Symmetric Jwt Token
                     success.Token = Cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
 
-                    success.RefreshToken = "'test";
+                    success.RefreshToken = _cryptography.GenerateToken(user.Id, "UserRefreshToken", 
+                        user.SecurityStamp ?? "", ApiGatewayInformation.RefreshTokenValideTime);
 
                     if (!string.IsNullOrEmpty(success.Token) && !string.IsNullOrEmpty(success.RefreshToken))
                         success.Success = true;
