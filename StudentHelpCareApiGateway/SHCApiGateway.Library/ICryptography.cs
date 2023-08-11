@@ -1,7 +1,20 @@
-﻿namespace SHCApiGateway.Library
+﻿using System.Security.Claims;
+
+namespace SHCApiGateway.Library
 {
-    public interface ICryptography
+    public interface ICryptography<Tuser> where Tuser : class
     {
+        string ProtectData(byte[] data);
+        string UnProtectData(string data);
+        string GenerateJWTSymmetricToken(Claim[] claims,
+            string secretKey, DateTime tokenValidationTime,
+            string algorithom, string issuer, string audience);
+        string GenerateJWTAsymmetricToken(Claim[] claims,
+           DateTime tokenValidationTime, string issuer, string audience);
+        string GenerateDefaultSymmetricJwtToken(Tuser user, IList<string> roleList,
+            IList<System.Security.Claims.Claim> ClaimTypes);
+        string OpenIdJwtToken(Tuser user, IList<string> roleList,
+            IList<System.Security.Claims.Claim> ClaimTypes);
         string GenerateToken(string userId, string purpose, string securityStamp, DateTime validityTime);
     }
 }

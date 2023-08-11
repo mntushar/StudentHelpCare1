@@ -13,10 +13,10 @@ namespace SHCApiGateway.Services.Services
         private UserManager<User> _userManager;
         private ILogger<UserAuthentication> _logger;
         private SignInManager<User> _singInManager;
-        private ICryptography _cryptography;
+        private ICryptography<User> _cryptography;
 
         public UserAuthentication(UserManager<User> userManager, SignInManager<User> singInManger,
-            ILogger<UserAuthentication> logger, ICryptography cryptography)
+            ILogger<UserAuthentication> logger, ICryptography<User> cryptography)
         {
             _userManager = userManager;
             _singInManager = singInManger;
@@ -49,7 +49,7 @@ namespace SHCApiGateway.Services.Services
                     IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
 
                     //Generate Symmetric Jwt Token
-                    success.Token = Cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
+                    success.Token = _cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
 
                     success.RefreshToken = _cryptography.GenerateToken(user.Id, "UserRefreshToken", 
                         user.SecurityStamp ?? "", ApiGatewayInformation.RefreshTokenValideTime);
@@ -66,11 +66,8 @@ namespace SHCApiGateway.Services.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Login error:", ex);
-            }
-            finally 
-            { 
                 success = new AuthenticationResult();
+                _logger.LogError(ex, "Login error:", ex);
             }
 
             return success;

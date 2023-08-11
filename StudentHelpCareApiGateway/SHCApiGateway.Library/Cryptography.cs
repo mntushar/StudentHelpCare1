@@ -1,5 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using Microsoft.Owin.Security.DataProtection;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using SHCApiGateway.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,16 +10,66 @@ using System.Text;
 
 namespace SHCApiGateway.Library
 {
-    public class Cryptography : ICryptography
+    public class Cryptography<Tuser> : ICryptography<Tuser> where Tuser : class
     {
-        private IDataProtector _protector;
+        private readonly string _dataProtectKeyPath = ApiGatewayInformation.CertificationPath;
+        private readonly string _dataProtectKeyFileName = "DataProtectionKey";
+        private UserManager<Tuser> _userManager;
 
-        public Cryptography(IDataProtectionProvider dataProtectionProvider)
+        public Cryptography(UserManager<Tuser> userManager)
         {
-            _protector = dataProtectionProvider.Create("Cryptography protection");
+            _userManager = userManager;
         }
 
-        public static string GenerateJWTSymmetricToken(Claim[] claims,
+        public string ProtectData(byte[] data)
+        {
+            string protectString = string.Empty;
+
+            try
+            {
+                var destFolder = Path.Combine(_dataProtectKeyPath, _dataProtectKeyFileName);
+
+                // Instantiate the data protection system at this folder
+                var dataProtectionProvider = DataProtectionProvider.Create(
+                    new DirectoryInfo(destFolder));
+
+                var protector = dataProtectionProvider.CreateProtector("Cryptography protection");
+                byte[] protectedBytes = protector.Protect(data);
+
+                protectString = Convert.ToBase64String(protectedBytes);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return protectString;
+        }
+
+        public string UnProtectData(string data)
+        {
+            string unprotectString = string.Empty;
+
+            try
+            {
+                var destFolder = Path.Combine(_dataProtectKeyPath, _dataProtectKeyFileName);
+
+                // Instantiate the data protection system at this folder
+                var dataProtectionProvider = DataProtectionProvider.Create(
+                    new DirectoryInfo(destFolder));
+
+                var protector = dataProtectionProvider.CreateProtector("Cryptography protection");
+                unprotectString = protector.Unprotect(data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return unprotectString;
+        }
+
+        public string GenerateJWTSymmetricToken(Claim[] claims,
             string secretKey, DateTime tokenValidationTime,
             string algorithom, string issuer, string audience)
         {
@@ -45,13 +97,13 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                throw new ArgumentNullException(ex.Message);
+                Console.WriteLine(ex.Message);
             }
 
             return tokenString;
         }
 
-        public static string GenerateJWTAsymmetricToken(Claim[] claims,
+        public string GenerateJWTAsymmetricToken(Claim[] claims,
            DateTime tokenValidationTime, string issuer, string audience)
         {
             string tokenString = string.Empty;
@@ -84,13 +136,13 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                throw new ArgumentNullException(ex.Message);
+                Console.WriteLine(ex.Message);
             }
 
             return tokenString;
         }
 
-        public static string GenerateDefaultSymmetricJwtToken(User user, IList<string> roleList,
+        public string GenerateDefaultSymmetricJwtToken(Tuser user, IList<string> roleList,
             IList<System.Security.Claims.Claim> ClaimTypes)
         {
             string token = string.Empty;
@@ -119,13 +171,13 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                throw new ArgumentNullException(ex.Message);
+                Console.WriteLine(ex.Message);
             }
 
             return token;
         }
 
-        public static string OpenIdJwtToken(User user, IList<string> roleList,
+        public string OpenIdJwtToken(Tuser user, IList<string> roleList,
             IList<System.Security.Claims.Claim> ClaimTypes)
         {
             string token = string.Empty;
@@ -153,7 +205,7 @@ namespace SHCApiGateway.Library
             }
             catch (Exception ex)
             {
-                throw new ArgumentNullException(ex.Message);
+                Console.WriteLine(ex.Message);
             }
 
             return token;
@@ -166,8 +218,6 @@ namespace SHCApiGateway.Library
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(purpose) || string.IsNullOrEmpty(securityStamp))
                 return token;
 
-            //ArgumentNullException.ThrowIfNull();
-
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (StreamWriter writer = new StreamWriter(memoryStream))
@@ -178,31 +228,134 @@ namespace SHCApiGateway.Library
                     writer.Write(securityStamp);
                 }
 
-                // The data is now written to the MemoryStream
-
-                // Reset the position to the beginning of the MemoryStream
-                memoryStream.Seek(0, SeekOrigin.Begin);
-
-                var protectedBytes = _protector.Protect(memoryStream.ToArray());
-                token = Convert.ToBase64String(protectedBytes);
+                token = ProtectData(memoryStream.ToArray());
             }
-            //var ms = new MemoryStream();
-            ////var userId = await manager.GetUserIdAsync(user);
-            //using (var writer = ms.CreateWriter())
-            //{
-            //    writer.Write(validityTime);
-            //    writer.Write(userId);
-            //    writer.Write(purpose);
-            //    //string? stamp = null;
-            //    //if (manager.SupportsUserSecurityStamp)
-            //    //{
-            //    //    stamp = await manager.GetSecurityStampAsync(user);
-            //    //}
-            //    writer.Write(securityStamp);
-            //}
-            //var protectedBytes = _protector.Protect(memoryStream.ToArray());
 
             return token;
+        }
+
+        public async Task<bool> ValidateTokenAsync(string token, string purpose, Tuser user)
+        {
+            try
+            {
+                var unprotectedData = UnProtectData(token);
+
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    using (StreamReader reader = new StreamReader(memoryStream))
+                    {
+                        var creationTime = reader.ReadDateTimeOffset();
+                        var expirationTime = creationTime + Options.TokenLifespan;
+                        if (expirationTime < DateTimeOffset.UtcNow)
+                        {
+                            Console.WriteLine("InvalidExpirationTime");
+                            return false;
+                        }
+
+                        var userId = reader.Read();
+                        var actualUserId = await _userManager.GetUserIdAsync(user);
+                        if (userId != actualUserId)
+                        {
+                            Console.WriteLine("UserIdsNotEquals");
+                            return false;
+                        }
+
+                        var purp = reader.Read();
+                        if (!string.Equals(purp, purpose))
+                        {
+                            Console.WriteLine("PurposeNotEquals");
+                            return false;
+                        }
+
+                        var stamp = reader.Read();
+                        if (reader.PeekChar() != -1)
+                        {
+                            Console.WriteLine("UnexpectedEndOfInput");
+                            return false;
+                        }
+
+                        if (_userManager.SupportsUserSecurityStamp)
+                        {
+                            var isEqualsSecurityStamp = stamp == await _userManager.GetSecurityStampAsync(user);
+                            if (!isEqualsSecurityStamp)
+                            {
+                                Console.WriteLine("SecurityStampNotEquals");
+                            }
+
+                            return isEqualsSecurityStamp;
+                        }
+
+                        var stampIsEmpty = stamp == "";
+                        if (!stampIsEmpty)
+                        {
+                            Console.WriteLine("SecurityStampIsNotEmpty");
+                        }
+
+                        return stampIsEmpty;
+                    }
+                }
+
+                //var ms = new MemoryStream(unprotectedData);
+                //using (var reader = ms.CreateReader())
+                //{
+                //    var creationTime = reader.ReadDateTimeOffset();
+                //    var expirationTime = creationTime + Options.TokenLifespan;
+                //    if (expirationTime < DateTimeOffset.UtcNow)
+                //    {
+                //        Logger.InvalidExpirationTime();
+                //        return false;
+                //    }
+
+                //    var userId = reader.ReadString();
+                //    var actualUserId = await manager.GetUserIdAsync(user);
+                //    if (userId != actualUserId)
+                //    {
+                //        Logger.UserIdsNotEquals();
+                //        return false;
+                //    }
+
+                //    var purp = reader.ReadString();
+                //    if (!string.Equals(purp, purpose))
+                //    {
+                //        Logger.PurposeNotEquals(purpose, purp);
+                //        return false;
+                //    }
+
+                //    var stamp = reader.ReadString();
+                //    if (reader.PeekChar() != -1)
+                //    {
+                //        Logger.UnexpectedEndOfInput();
+                //        return false;
+                //    }
+
+                //    if (manager.SupportsUserSecurityStamp)
+                //    {
+                //        var isEqualsSecurityStamp = stamp == await manager.GetSecurityStampAsync(user);
+                //        if (!isEqualsSecurityStamp)
+                //        {
+                //            Logger.SecurityStampNotEquals();
+                //        }
+
+                //        return isEqualsSecurityStamp;
+                //    }
+
+                //    var stampIsEmpty = stamp == "";
+                //    if (!stampIsEmpty)
+                //    {
+                //        Logger.SecurityStampIsNotEmpty();
+                //    }
+
+                    //return stampIsEmpty;
+                //}
+            }
+            // ReSharper disable once EmptyGeneralCatchClause
+            catch(Exception ex)
+            {
+                // Do not leak exception
+                Console.WriteLine(ex.Message);
+            }
+
+            return false;
         }
     }
 }
