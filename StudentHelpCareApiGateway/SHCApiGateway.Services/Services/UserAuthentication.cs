@@ -48,8 +48,8 @@ namespace SHCApiGateway.Services.Services
                     IList<string> roleList = await _userManager.GetRolesAsync(user);
                     IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
 
-                    //Generate Symmetric Jwt Token
-                    success.Token = _cryptography.OpenIdJwtToken(user, roleList, ClaimTypes);
+                    success.Token = _cryptography.OpenIdJwtToken(user.Id, 
+                        user.UserName!, user.Email!, roleList, ClaimTypes);
 
                     success.RefreshToken = _cryptography.GenerateToken(user.Id, "UserRefreshToken", 
                         user.SecurityStamp ?? "", ApiGatewayInformation.RefreshTokenValideTime);
@@ -71,6 +71,14 @@ namespace SHCApiGateway.Services.Services
             }
 
             return success;
+        }
+
+        public async Task<string> UserRefreshToken(string token)
+        {
+            string jwtToken = string.Empty;
+            bool isValid = await _cryptography.ValidateTokenAsync(token, "UserRefreshToken");
+
+            return jwtToken;
         }
     }
 }

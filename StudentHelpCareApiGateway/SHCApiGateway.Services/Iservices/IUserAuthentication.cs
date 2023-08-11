@@ -6,5 +6,6 @@ namespace SHCApiGateway.Services.Iservices
     public interface IUserAuthentication
     {
         Task<AuthenticationResult> UserLogin(UserLoginModel userLogin);
+        Task<string> UserRefreshToken(string token);
     }
 }

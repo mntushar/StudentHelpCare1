@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SHCApiGateway.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
@@ -142,32 +140,35 @@ namespace SHCApiGateway.Library
             return tokenString;
         }
 
-        public string GenerateDefaultSymmetricJwtToken(Tuser user, IList<string> roleList,
-            IList<System.Security.Claims.Claim> ClaimTypes)
+        public string GenerateDefaultSymmetricJwtToken(string userId, string userName, string userEmail,
+            IList<string> roleList, IList<System.Security.Claims.Claim> ClaimTypes)
         {
             string token = string.Empty;
+
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userName)
+                || string.IsNullOrEmpty(userEmail))
+                return token;
 
             try
             {
                 string role = string.Join(",", roleList.Select(r => r.ToString()));
                 string claim = string.Join(",", ClaimTypes.Select(c => c.ToString()));
 
-                if (user != null)
+
+                var clims = new[]
                 {
-                    var clims = new[]
-                    {
-                    new Claim("Id", user.Id),
-                    new Claim("name", user.UserName!),
-                    new Claim("email", user.Email!),
+                    new Claim("Id", userId),
+                    new Claim("name", userName),
+                    new Claim("email", userEmail),
                     new Claim("role", role),
                     new Claim("claimTypes", claim),
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                    token = GenerateJWTSymmetricToken(clims, ApiGatewayInformation.SymmetricKey,
-                                    ApiGatewayInformation.TokenValideTime, SecurityAlgorithms.HmacSha256,
-                                    ApiGatewayInformation.url, ApiGatewayInformation.url);
-                }
+                token = GenerateJWTSymmetricToken(clims, ApiGatewayInformation.SymmetricKey,
+                                ApiGatewayInformation.TokenValideTime, SecurityAlgorithms.HmacSha256,
+                                ApiGatewayInformation.url, ApiGatewayInformation.url);
+
             }
             catch (Exception ex)
             {
@@ -177,31 +178,34 @@ namespace SHCApiGateway.Library
             return token;
         }
 
-        public string OpenIdJwtToken(Tuser user, IList<string> roleList,
-            IList<System.Security.Claims.Claim> ClaimTypes)
+        public string OpenIdJwtToken(string userId, string userName,
+            string userEmail, IList<string> roleList, IList<System.Security.Claims.Claim> ClaimTypes)
         {
             string token = string.Empty;
+
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userName)
+                || string.IsNullOrEmpty(userEmail))
+                return token;
+
             try
             {
                 string role = string.Join(",", roleList.Select(r => r.ToString()));
                 string claim = string.Join(",", ClaimTypes.Select(c => c.ToString()));
 
-                if (user != null)
+
+                var clims = new[]
                 {
-                    var clims = new[]
-                    {
-                    new Claim("Id", user.Id),
-                    new Claim("name", user.UserName!),
-                    new Claim("email", user.Email!),
+                    new Claim("Id", userId),
+                    new Claim("name", userName),
+                    new Claim("email", userEmail),
                     new Claim("role", role),
                     new Claim("claimTypes", claim),
                     new Claim("iat", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 };
 
-                    token = GenerateJWTAsymmetricToken(clims, DateTime.Now.AddDays(1),
-                        ApiGatewayInformation.url,
-                        ApiGatewayInformation.url);
-                }
+                token = GenerateJWTAsymmetricToken(clims, DateTime.Now.AddDays(1),
+                    ApiGatewayInformation.url,
+                    ApiGatewayInformation.url);
             }
             catch (Exception ex)
             {
@@ -234,7 +238,7 @@ namespace SHCApiGateway.Library
             return token;
         }
 
-        public async Task<bool> ValidateTokenAsync(string token, string purpose, Tuser user)
+        public async Task<bool> ValidateTokenAsync(string token, string purpose)
         {
             try
             {
@@ -242,57 +246,58 @@ namespace SHCApiGateway.Library
 
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    using (StreamReader reader = new StreamReader(memoryStream))
-                    {
-                        var creationTime = reader.ReadDateTimeOffset();
-                        var expirationTime = creationTime + Options.TokenLifespan;
-                        if (expirationTime < DateTimeOffset.UtcNow)
-                        {
-                            Console.WriteLine("InvalidExpirationTime");
-                            return false;
-                        }
+                    //    using (StreamReader reader = new StreamReader(memoryStream))
+                    //    {
+                    //        var creationTime = reader.ReadDateTimeOffset();
+                    //        var expirationTime = creationTime + Options.TokenLifespan;
+                    //        if (expirationTime < DateTimeOffset.UtcNow)
+                    //        {
+                    //            Console.WriteLine("InvalidExpirationTime");
+                    //            return false;
+                    //        }
 
-                        var userId = reader.Read();
-                        var actualUserId = await _userManager.GetUserIdAsync(user);
-                        if (userId != actualUserId)
-                        {
-                            Console.WriteLine("UserIdsNotEquals");
-                            return false;
-                        }
+                    //        var userId = reader.Read();
+                    //        var user = await _userManager.GetUserIdAsync(userId);
+                    //        var actualUserId = user.Id;
+                    //        if (userId != actualUserId)
+                    //        {
+                    //            Console.WriteLine("UserIdsNotEquals");
+                    //            return false;
+                    //        }
 
-                        var purp = reader.Read();
-                        if (!string.Equals(purp, purpose))
-                        {
-                            Console.WriteLine("PurposeNotEquals");
-                            return false;
-                        }
+                    //        var purp = reader.Read();
+                    //        if (!string.Equals(purp, purpose))
+                    //        {
+                    //            Console.WriteLine("PurposeNotEquals");
+                    //            return false;
+                    //        }
 
-                        var stamp = reader.Read();
-                        if (reader.PeekChar() != -1)
-                        {
-                            Console.WriteLine("UnexpectedEndOfInput");
-                            return false;
-                        }
+                    //        var stamp = reader.Read();
+                    //        if (reader.PeekChar() != -1)
+                    //        {
+                    //            Console.WriteLine("UnexpectedEndOfInput");
+                    //            return false;
+                    //        }
 
-                        if (_userManager.SupportsUserSecurityStamp)
-                        {
-                            var isEqualsSecurityStamp = stamp == await _userManager.GetSecurityStampAsync(user);
-                            if (!isEqualsSecurityStamp)
-                            {
-                                Console.WriteLine("SecurityStampNotEquals");
-                            }
+                    //        if (_userManager.SupportsUserSecurityStamp)
+                    //        {
+                    //            var isEqualsSecurityStamp = stamp == await _userManager.GetSecurityStampAsync(user);
+                    //            if (!isEqualsSecurityStamp)
+                    //            {
+                    //                Console.WriteLine("SecurityStampNotEquals");
+                    //            }
 
-                            return isEqualsSecurityStamp;
-                        }
+                    //            return isEqualsSecurityStamp;
+                    //        }
 
-                        var stampIsEmpty = stamp == "";
-                        if (!stampIsEmpty)
-                        {
-                            Console.WriteLine("SecurityStampIsNotEmpty");
-                        }
+                    //        var stampIsEmpty = stamp == "";
+                    //        if (!stampIsEmpty)
+                    //        {
+                    //            Console.WriteLine("SecurityStampIsNotEmpty");
+                    //        }
 
-                        return stampIsEmpty;
-                    }
+                    //        return stampIsEmpty;
+                    //    }
                 }
 
                 //var ms = new MemoryStream(unprotectedData);
@@ -345,11 +350,11 @@ namespace SHCApiGateway.Library
                 //        Logger.SecurityStampIsNotEmpty();
                 //    }
 
-                    //return stampIsEmpty;
+                //return stampIsEmpty;
                 //}
             }
             // ReSharper disable once EmptyGeneralCatchClause
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Do not leak exception
                 Console.WriteLine(ex.Message);
