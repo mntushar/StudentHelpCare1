@@ -10,7 +10,7 @@ namespace SHCApiGateway.Maps
             var registerMap = app.MapGroup("/authentication");
 
             registerMap.MapPost("/login", UserLogin);
-            registerMap.MapGet("/refreshToken/{{refreshToken}}", async (IUserAuthentication userAuthentication, string refreshToken) =>
+            registerMap.MapPost("/refreshToken/", async (IUserAuthentication userAuthentication, string refreshToken) =>
             {
                 await UserRefreshToken(userAuthentication, refreshToken);
             });

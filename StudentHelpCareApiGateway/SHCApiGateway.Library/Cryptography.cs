@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using SHCApiGateway.Data.Model;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
@@ -12,6 +13,8 @@ namespace SHCApiGateway.Library
     {
         private readonly string _dataProtectKeyPath = ApiGatewayInformation.CertificationPath;
         private readonly string _dataProtectKeyFileName = "DataProtectionKey";
+        private readonly char _stringSeparator = ';';
+        private readonly int _tokenEntity = 4;
         private UserManager<Tuser> _userManager;
 
         public Cryptography(UserManager<Tuser> userManager)
@@ -19,7 +22,7 @@ namespace SHCApiGateway.Library
             _userManager = userManager;
         }
 
-        public string ProtectData(byte[] data)
+        public string ProtectData(string data)
         {
             string protectString = string.Empty;
 
@@ -32,9 +35,7 @@ namespace SHCApiGateway.Library
                     new DirectoryInfo(destFolder));
 
                 var protector = dataProtectionProvider.CreateProtector("Cryptography protection");
-                byte[] protectedBytes = protector.Protect(data);
-
-                protectString = Convert.ToBase64String(protectedBytes);
+                protectString = protector.Protect(data);
             }
             catch (Exception ex)
             {
@@ -222,145 +223,73 @@ namespace SHCApiGateway.Library
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(purpose) || string.IsNullOrEmpty(securityStamp))
                 return token;
 
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                using (StreamWriter writer = new StreamWriter(memoryStream))
-                {
-                    writer.Write(validityTime);
-                    writer.Write(userId);
-                    writer.Write(purpose);
-                    writer.Write(securityStamp);
-                }
+            string[] listInfo = new string[_tokenEntity];
+            listInfo[0] = userId;
+            listInfo[1] = purpose;
+            listInfo[2] = securityStamp;
+            listInfo[3] = validityTime.ToString();
+            string info = string.Join(_stringSeparator, listInfo);
 
-                token = ProtectData(memoryStream.ToArray());
-            }
+            token = ProtectData(info);
 
             return token;
         }
 
-        public async Task<bool> ValidateTokenAsync(string token, string purpose)
+        public async Task<SuccessResult> ValidateTokenAsync(string token, string purpose)
         {
+            SuccessResult success = new SuccessResult();
+
             try
             {
                 var unprotectedData = UnProtectData(token);
 
-                using (MemoryStream memoryStream = new MemoryStream())
+                string[] listInfo = unprotectedData.Split(_stringSeparator);
+
+                if (!listInfo.Any() || listInfo.Count() < _tokenEntity)
+                    return success;
+
+                DateTime validityDate = DateTime.Parse(listInfo[3]);
+                if(validityDate < DateTime.Now)
                 {
-                    //    using (StreamReader reader = new StreamReader(memoryStream))
-                    //    {
-                    //        var creationTime = reader.ReadDateTimeOffset();
-                    //        var expirationTime = creationTime + Options.TokenLifespan;
-                    //        if (expirationTime < DateTimeOffset.UtcNow)
-                    //        {
-                    //            Console.WriteLine("InvalidExpirationTime");
-                    //            return false;
-                    //        }
-
-                    //        var userId = reader.Read();
-                    //        var user = await _userManager.GetUserIdAsync(userId);
-                    //        var actualUserId = user.Id;
-                    //        if (userId != actualUserId)
-                    //        {
-                    //            Console.WriteLine("UserIdsNotEquals");
-                    //            return false;
-                    //        }
-
-                    //        var purp = reader.Read();
-                    //        if (!string.Equals(purp, purpose))
-                    //        {
-                    //            Console.WriteLine("PurposeNotEquals");
-                    //            return false;
-                    //        }
-
-                    //        var stamp = reader.Read();
-                    //        if (reader.PeekChar() != -1)
-                    //        {
-                    //            Console.WriteLine("UnexpectedEndOfInput");
-                    //            return false;
-                    //        }
-
-                    //        if (_userManager.SupportsUserSecurityStamp)
-                    //        {
-                    //            var isEqualsSecurityStamp = stamp == await _userManager.GetSecurityStampAsync(user);
-                    //            if (!isEqualsSecurityStamp)
-                    //            {
-                    //                Console.WriteLine("SecurityStampNotEquals");
-                    //            }
-
-                    //            return isEqualsSecurityStamp;
-                    //        }
-
-                    //        var stampIsEmpty = stamp == "";
-                    //        if (!stampIsEmpty)
-                    //        {
-                    //            Console.WriteLine("SecurityStampIsNotEmpty");
-                    //        }
-
-                    //        return stampIsEmpty;
-                    //    }
+                    Console.WriteLine("InvalidExpirationTime");
+                    return success;
                 }
 
-                //var ms = new MemoryStream(unprotectedData);
-                //using (var reader = ms.CreateReader())
-                //{
-                //    var creationTime = reader.ReadDateTimeOffset();
-                //    var expirationTime = creationTime + Options.TokenLifespan;
-                //    if (expirationTime < DateTimeOffset.UtcNow)
-                //    {
-                //        Logger.InvalidExpirationTime();
-                //        return false;
-                //    }
+                string userId = listInfo[0];
+                Tuser? user = await _userManager.FindByIdAsync(userId);
+                if(user == null)
+                {
+                    Console.WriteLine("UserIdsNotEquals");
+                    return success;
+                }
 
-                //    var userId = reader.ReadString();
-                //    var actualUserId = await manager.GetUserIdAsync(user);
-                //    if (userId != actualUserId)
-                //    {
-                //        Logger.UserIdsNotEquals();
-                //        return false;
-                //    }
+                string userPrpose = listInfo[1];
+                if(!string.Equals(userPrpose, purpose))
+                {
+                    Console.WriteLine("PurposeNotEquals");
+                    return success;
+                }
 
-                //    var purp = reader.ReadString();
-                //    if (!string.Equals(purp, purpose))
-                //    {
-                //        Logger.PurposeNotEquals(purpose, purp);
-                //        return false;
-                //    }
+                string userSecurityStamp = listInfo[2];
+                if (_userManager.SupportsUserSecurityStamp)
+                {
+                    string securityStamp = await _userManager.GetSecurityStampAsync(user);
+                    if (!string.Equals(userSecurityStamp, securityStamp))
+                    {
+                        Console.WriteLine("PurposeNotEquals");
+                        return success;
+                    }
+                }
 
-                //    var stamp = reader.ReadString();
-                //    if (reader.PeekChar() != -1)
-                //    {
-                //        Logger.UnexpectedEndOfInput();
-                //        return false;
-                //    }
-
-                //    if (manager.SupportsUserSecurityStamp)
-                //    {
-                //        var isEqualsSecurityStamp = stamp == await manager.GetSecurityStampAsync(user);
-                //        if (!isEqualsSecurityStamp)
-                //        {
-                //            Logger.SecurityStampNotEquals();
-                //        }
-
-                //        return isEqualsSecurityStamp;
-                //    }
-
-                //    var stampIsEmpty = stamp == "";
-                //    if (!stampIsEmpty)
-                //    {
-                //        Logger.SecurityStampIsNotEmpty();
-                //    }
-
-                //return stampIsEmpty;
-                //}
+                success.Success = true;
+                success.Message = userId;
             }
-            // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception ex)
             {
-                // Do not leak exception
                 Console.WriteLine(ex.Message);
             }
 
-            return false;
+            return success;
         }
     }
 }

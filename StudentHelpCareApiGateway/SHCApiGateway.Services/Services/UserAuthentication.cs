@@ -48,16 +48,18 @@ namespace SHCApiGateway.Services.Services
                     IList<string> roleList = await _userManager.GetRolesAsync(user);
                     IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
 
-                    success.Token = _cryptography.OpenIdJwtToken(user.Id, 
+                    string Token = _cryptography.OpenIdJwtToken(user.Id, 
                         user.UserName!, user.Email!, roleList, ClaimTypes);
 
-                    success.RefreshToken = _cryptography.GenerateToken(user.Id, "UserRefreshToken", 
+                    string RefreshToken = _cryptography.GenerateToken(user.Id, "UserRefreshToken", 
                         user.SecurityStamp ?? "", ApiGatewayInformation.RefreshTokenValideTime);
 
-                    if (!string.IsNullOrEmpty(success.Token) && !string.IsNullOrEmpty(success.RefreshToken))
+                    if (!string.IsNullOrEmpty(Token) && !string.IsNullOrEmpty(RefreshToken))
+                    {
                         success.Success = true;
-                    else
-                        success = new AuthenticationResult();
+                        success.Token = Token;
+                        success.RefreshToken = RefreshToken;
+                    }    
                 }
                 else
                 {
@@ -66,19 +68,31 @@ namespace SHCApiGateway.Services.Services
             }
             catch (Exception ex)
             {
-                success = new AuthenticationResult();
                 _logger.LogError(ex, "Login error:", ex);
             }
 
             return success;
         }
 
-        public async Task<string> UserRefreshToken(string token)
+        public async Task<SuccessResult> UserRefreshToken(string token)
         {
-            string jwtToken = string.Empty;
-            bool isValid = await _cryptography.ValidateTokenAsync(token, "UserRefreshToken");
+            SuccessResult success = await _cryptography.ValidateTokenAsync(token, "UserRefreshToken");
 
-            return jwtToken;
+            if (success.Success)
+            {
+                User? user = await _userManager.FindByIdAsync(success.Message!);
+
+                if (user == null)
+                    return success;
+
+                IList<string> roleList = await _userManager.GetRolesAsync(user);
+                IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);
+
+                success.Message = _cryptography.OpenIdJwtToken(user.Id, user.UserName!, user.Email!,
+                    roleList, ClaimTypes);
+            }
+
+            return success;
         }
     }
 }

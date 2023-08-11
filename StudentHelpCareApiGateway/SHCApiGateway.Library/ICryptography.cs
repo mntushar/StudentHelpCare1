@@ -1,10 +1,11 @@
-﻿using System.Security.Claims;
+﻿using SHCApiGateway.Data.Model;
+using System.Security.Claims;
 
 namespace SHCApiGateway.Library
 {
     public interface ICryptography<Tuser> where Tuser : class
     {
-        string ProtectData(byte[] data);
+        string ProtectData(string data);
         string UnProtectData(string data);
         string GenerateJWTSymmetricToken(Claim[] claims,
             string secretKey, DateTime tokenValidationTime,
@@ -16,6 +17,6 @@ namespace SHCApiGateway.Library
         string OpenIdJwtToken(string userId, string userName,
             string userEmail, IList<string> roleList, IList<System.Security.Claims.Claim> ClaimTypes);
         string GenerateToken(string userId, string purpose, string securityStamp, DateTime validityTime);
-        Task<bool> ValidateTokenAsync(string token, string purpose);
+        Task<SuccessResult> ValidateTokenAsync(string token, string purpose);
     }
 }
