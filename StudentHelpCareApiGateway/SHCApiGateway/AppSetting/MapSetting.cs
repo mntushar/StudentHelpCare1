@@ -13,7 +13,7 @@ namespace StudentHelpCare.StudentHelpCareIdentityServer.AppSetting
             //initialise register map
             UserMap.InitialiseMap(app);
 
-            //initialise register map
+            //initialise authentication map
             UserAuthenticationMap.InitialiseMap(app);
 
             return app;

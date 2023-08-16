@@ -83,7 +83,7 @@ namespace SHCApiGateway.Services.Services
                 User? user = await _userManager.FindByIdAsync(success.Message!);
 
                 if (user == null)
-                    return success;
+                    return new SuccessResult();
 
                 IList<string> roleList = await _userManager.GetRolesAsync(user);
                 IList<System.Security.Claims.Claim> ClaimTypes = await _userManager.GetClaimsAsync(user);

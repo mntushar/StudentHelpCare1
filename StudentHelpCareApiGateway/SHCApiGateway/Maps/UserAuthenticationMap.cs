@@ -10,10 +10,7 @@ namespace SHCApiGateway.Maps
             var registerMap = app.MapGroup("/authentication");
 
             registerMap.MapPost("/login", UserLogin);
-            registerMap.MapPost("/refreshToken/", async (IUserAuthentication userAuthentication, string refreshToken) =>
-            {
-                await UserRefreshToken(userAuthentication, refreshToken);
-            });
+            registerMap.MapGet("/refreshToken/", UserRefreshToken);
 
             return app;
         }
@@ -24,18 +21,32 @@ namespace SHCApiGateway.Maps
             {
                 return TypedResults.BadRequest(string.Empty);
             }
-            
-            return TypedResults.Ok(await userAuthentication.UserLogin(user));
+
+            var result = await userAuthentication.UserLogin(user);
+
+            if (!result.Success)
+            {
+                return TypedResults.NotFound(result);
+            }
+
+            return TypedResults.Ok(result);
         }
 
-        private static async Task<IResult> UserRefreshToken(IUserAuthentication userAuthentication, string token)
+        private static async Task<IResult> UserRefreshToken(IUserAuthentication userAuthentication, string refreshToken)
         {
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(refreshToken))
             {
                 return TypedResults.BadRequest(string.Empty);
             }
 
-            return TypedResults.Ok(await userAuthentication.UserRefreshToken(token));
+            var result = await userAuthentication.UserRefreshToken(refreshToken);
+
+            if (!result.Success)
+            {
+                return TypedResults.NotFound(result);
+            }
+
+            return TypedResults.Ok(result);
         }
     }
 }
